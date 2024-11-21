@@ -1,35 +1,24 @@
 const express = require("express");
-const cors = require("cors");
 const ejs = require("ejs");
 
 const app = express();
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const Department = require("./models/Department");
-const Doctor = require("./models/Doctor");
-const Sick = require("./models/Sick");
+const departmentRoutes = require("./routes/department");
+const doctorRoutes = require("./routes/doctor");
+const sickRoutes = require("./routes/sick");
+
+app.use("/department", departmentRoutes);
+app.use("/doctor", doctorRoutes);
+app.use("/sick", sickRoutes);
+
 const Views = require("./models/Views");
 
-app.use("/department/getall", async (req, res) => {
-    const departments = await Department.getAll();
-    if (!departments) return res.status(404).end();
-    res.status(200).json(departments[0]);
-});
-
-app.use("/doctor/getall", async (req, res) => {
-    const doctors = await Doctor.getAll();
-    if (!doctors) return res.status(404).end();
-    res.status(200).json(doctors[0]);
-});
-
-app.use("/sick/getall", async (req, res) => {
-    const sicks = await Sick.getAll();
-    if (!sicks) return res.status(404).end();
-    res.status(200).json(sicks[0]);
+app.get("/", (req, res) => {
+    res.render("index");
 });
 
 app.use("/views/department_doctor", async (req, res) => {
