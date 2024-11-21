@@ -16,9 +16,20 @@ app.use("/doctor", doctorRoutes);
 app.use("/sick", sickRoutes);
 
 const Views = require("./models/Views");
+const Department = require("./models/Department");
+const Doctor = require("./models/Doctor");
+const Sick = require("./models/Sick");
 
-app.get("/", (req, res) => {
-    res.render("index");
+app.get("/", async (req, res) => {
+    const department = await Department.countAmount();
+    const doctor = await Doctor.countAmount();
+    const sick = await Sick.countAmount();
+    res.render("index", {
+        title: "xHospital",
+        department: department[0],
+        doctor: doctor[0],
+        sick: sick[0],
+    });
 });
 
 app.use("/views/department_doctor", async (req, res) => {

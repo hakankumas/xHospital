@@ -5,6 +5,10 @@ module.exports = class Doctor {
         return connection.execute("SELECT * FROM doctor");
     }
 
+    static countAmount() {
+        return connection.execute("SELECT * FROM count_doctor");
+    }
+
     static getById(id) {
         return connection.execute("SELECT * FROM doctor WHERE id =?", [id]);
     }
