@@ -16,7 +16,7 @@ module.exports = class Sick {
                 COUNT(doctor_sick.id) as number 
             FROM doctor_sick 
             GROUP BY doctor_sick_registration_date 
-            ORDER BY number DESC 
+            ORDER BY doctor_sick_registration_date DESC 
             LIMIT 31`
         );
     }

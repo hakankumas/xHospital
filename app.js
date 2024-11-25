@@ -29,7 +29,8 @@ app.get("/", async (req, res) => {
     const list_sick = await Sick.getAll();
 
     res.render("index", {
-        title: "xHospital",
+        title: "Hastane KDS",
+
         count_department: count_department[0],
         count_doctor: count_doctor[0],
         count_sick: count_sick[0],
@@ -37,6 +38,14 @@ app.get("/", async (req, res) => {
         list_department: list_department[0],
         list_doctor: list_doctor[0],
         list_sick: list_sick[0],
+    });
+});
+
+app.get("/api/dailySickAmount", async (req, res) => {
+    const dailySickAmount = await Sick.dailySickAmount();
+
+    res.status(200).json({
+        dailySickAmount: dailySickAmount[0],
     });
 });
 
