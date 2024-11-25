@@ -1,3 +1,5 @@
+<% const baseURL = "http://localhost:3000"; %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,11 +16,96 @@
             crossorigin="anonymous"
         />
         <link rel="stylesheet" href="/css/style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+            integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css"
+        />
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     </head>
     <body>
         <%- include('../_partials/_navbar') %>
         <div class="container">
-            <h1>department/index</h1>
+            <div class="row">
+                <!-- <h1>department/index</h1> -->
+                <div class="col-md-12 d-flex gap-3 my-3">
+                    <div
+                        class="col-md-6 p-3 border rounded border-success shadow-lg"
+                    >
+                        <a
+                            href="<%= baseURL %>/department"
+                            style="text-decoration: none; color: black"
+                        >
+                            <h5 class="text-center">
+                                Departmanlarımızın Bilgileri
+                            </h5>
+                        </a>
+                        <div>
+                            <table
+                                id="table_department"
+                                class="display rounded"
+                                style="
+                                    width: 100%;
+                                    background-color: whitesmoke;
+                                "
+                            >
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Departman Adı</th>
+                                        <th>Doktor Sayısı</th>
+                                        <th class="text-center">Düzenle</th>
+                                        <th class="text-center">Sil</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% list_department.forEach(department => {%>
+                                    <tr>
+                                        <td><%= department.id %></td>
+                                        <td><%= department.name %></td>
+                                        <td><%= department.number %></td>
+                                        <td
+                                            class="text-center"
+                                            style="cursor: pointer"
+                                        >
+                                            <i
+                                                class="fa-solid fa-pen-to-square text-success"
+                                            ></i>
+                                        </td>
+                                        <td
+                                            class="text-center"
+                                            style="cursor: pointer"
+                                        >
+                                            <i
+                                                class="fa-solid fa-trash text-danger"
+                                            ></i>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bg-success">
+                        <div class="col-md-12">
+                            1-> en çok doktor olan departmanlar
+                        </div>
+                        <div class="col-md-12">
+                            2-> en çok hasta gelen departmanlar
+                        </div>
+                        <div class="col-md-12">
+                            3-> en az hasta gelen departmanlar
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -31,5 +118,16 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+        <script>
+            new DataTable("#table_department", {
+                paging: false,
+                scrollCollapse: true,
+                scrollY: "100vh",
+                order: [
+                    [2, "desc"],
+                    [1, "asc"],
+                ],
+            });
+        </script>
     </body>
 </html>

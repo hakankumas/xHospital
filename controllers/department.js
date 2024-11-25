@@ -1,7 +1,13 @@
 const Department = require("../models/Department");
 
 exports.index = async (req, res) => {
-    res.render("./department/index");
+    // const list_department = await Department.getAll();
+
+    // res.render("./department/index", {
+    //     list_department: list_department[0],
+    // });
+
+    res.status(404).end();
 };
 
 exports.getAll = async (req, res) => {

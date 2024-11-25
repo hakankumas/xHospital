@@ -56,13 +56,13 @@
                                     month: "short",
                                     year: "numeric",
                                 }).format(
-                                    new Date(item.doctor_sick_registration_date)
+                                    new Date(item.sick_registration_date)
                                 ),
                                 item.number,
                             ]);
                         });
                         var options = {
-                            title: "Günlük Hasta Sayıları",
+                            title: "Günlük Hasta Sayıları (Son 14 Gün)",
                             titleTextStyle: {
                                 fontSize: 24,
                                 bold: true,
@@ -192,8 +192,10 @@
                                 <tbody>
                                     <% list_department.forEach(department => {%>
                                     <tr>
-                                        <td><%= department.id %></td>
-                                        <td><%= department.name %></td>
+                                        <td><%= department.department_id %></td>
+                                        <td>
+                                            <%= department.department_name %>
+                                        </td>
                                         <td><%= department.number %></td>
                                         <td
                                             class="text-center"
@@ -240,10 +242,8 @@
                                         <th>ID</th>
                                         <th>Ad</th>
                                         <th>Soyad</th>
-                                        <th>Doktor Kayıt Tarihi</th>
                                         <th>Departman ID</th>
                                         <th>Departman Adı</th>
-                                        <th>Departmana Kayıt Tarihi</th>
                                         <th class="text-center">Düzenle</th>
                                         <th class="text-center">Sil</th>
                                     </tr>
@@ -254,22 +254,8 @@
                                         <td><%= doctor.doctor_id %></td>
                                         <td><%= doctor.doctor_name %></td>
                                         <td><%= doctor.doctor_surname %></td>
-                                        <td>
-                                            <%= new Intl.DateTimeFormat('tr-TR',
-                                            { day: '2-digit', month: 'long',
-                                            year: 'numeric' }).format(new
-                                            Date(doctor.doctor_registration_date))
-                                            %>
-                                        </td>
                                         <td><%= doctor.department_id %></td>
                                         <td><%= doctor.department_name %></td>
-                                        <td>
-                                            <%= new Intl.DateTimeFormat('tr-TR',
-                                            { day: '2-digit', month: 'long',
-                                            year: 'numeric' }).format(new
-                                            Date(doctor.department_doctor_registration_date))
-                                            %>
-                                        </td>
                                         <td
                                             class="text-center"
                                             style="cursor: pointer"
@@ -313,14 +299,13 @@
                                 <thead>
                                     <tr>
                                         <th>Muayene ID</th>
-                                        <th>Hasta ID</th>
+                                        <th>Hasta TC</th>
                                         <th>Hasta Ad</th>
                                         <th>Hasta Soyad</th>
                                         <th>Hasta Kayıt Tarihi</th>
                                         <th>Doktor ID</th>
                                         <th>Doktor Ad</th>
                                         <th>Doktor Soyad</th>
-                                        <th>Hastanın Doktora Kayıt Tarihi</th>
                                         <th>Departman ID</th>
                                         <th>Departman Ad</th>
                                         <th class="text-center">Düzenle</th>
@@ -330,8 +315,8 @@
                                 <tbody>
                                     <% list_sick.forEach(sick => { %>
                                     <tr>
-                                        <td><%= sick.doctor_sick_id %></td>
                                         <td><%= sick.sick_id %></td>
+                                        <td><%= sick.sick_tc_no %></td>
                                         <td><%= sick.sick_name %></td>
                                         <td><%= sick.sick_surname %></td>
                                         <td>
@@ -344,13 +329,6 @@
                                         <td><%= sick.doctor_id %></td>
                                         <td><%= sick.doctor_name %></td>
                                         <td><%= sick.doctor_surname %></td>
-                                        <td>
-                                            <%= new Intl.DateTimeFormat('tr-TR',
-                                            { day: '2-digit', month: 'long',
-                                            year: 'numeric' }).format(new
-                                            Date(sick.doctor_sick_registration_date))
-                                            %>
-                                        </td>
                                         <td><%= sick.department_id %></td>
                                         <td><%= sick.department_name %></td>
                                         <td

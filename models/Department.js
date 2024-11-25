@@ -1,34 +1,54 @@
 const connection = require("../database/db");
 
 module.exports = class Department {
+    // Departman Bilgisi + Departmanlardaki doktor sayısı
     static getAll() {
         return connection.execute(
-            `SELECT department.id, department.name, COUNT(doctor.id) as number 
-            FROM department 
-            LEFT JOIN department_doctor ON department.id = department_doctor.department_id 
-            LEFT JOIN doctor ON doctor.id = department_doctor.doctor_id 
-            GROUP BY department.id 
+            `SELECT
+                department.id as department_id,
+                department.name as department_name,
+                COUNT(doctor.id) as number    
+            FROM department
+            LEFT JOIN doctor ON doctor.department_id = department.id
+            GROUP BY department.id
             ORDER BY number DESC`
         );
     }
 
+    // Toplam departman sayısı
     static countAmount() {
         return connection.execute(`SELECT COUNT(*) as number FROM department`);
     }
 
+    // Departmanların günlük hasta sayısı
     static dailyNumberOfSickByDepartment() {
         return connection.execute(
-            `SELECT
-                DATE_FORMAT(doctor_sick.registration_date, '%Y-%m-%d') AS doctor_sick_registration_date,
-                department.name AS department_name,
-                COUNT(doctor_sick.id) AS number
-            FROM sick
-            LEFT JOIN doctor_sick ON sick.id = doctor_sick.sick_id
-            LEFT JOIN doctor ON doctor.id = doctor_sick.doctor_id
-            LEFT JOIN department_doctor ON department_doctor.doctor_id = doctor.id
-            LEFT JOIN department ON department.id = department_doctor.department_id
-            GROUP BY doctor_sick_registration_date, department.id
-            ORDER BY doctor_sick_registration_date DESC, number DESC`
+            `SELECT    
+                department.id as department_id,
+                department.name as department_name,
+                DATE_FORMAT(sick.registration_date, '%Y-%m-%d') AS sick_registration_date,
+                COUNT(sick.id) AS number
+            FROM sick 
+            LEFT JOIN doctor ON sick.doctor_id = doctor.id
+            LEFT JOIN department ON doctor.department_id = department.id
+            GROUP BY sick_registration_date, department.id
+            ORDER BY sick_registration_date DESC, number DESC
+            `
+        );
+    }
+
+    // Departmanların toplam hasta sayısı
+    static numberOfSickByDepartment() {
+        return connection.execute(
+            `SELECT    
+                department.id as department_id,
+                department.name as department_name,
+                COUNT(sick.id) AS number
+            FROM sick 
+            LEFT JOIN doctor ON sick.doctor_id = doctor.id
+            LEFT JOIN department ON doctor.department_id = department.id
+            GROUP BY department.id
+            ORDER BY number DESC`
         );
     }
 };

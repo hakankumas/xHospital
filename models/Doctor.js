@@ -1,27 +1,40 @@
 const connection = require("../database/db");
 
 module.exports = class Doctor {
+    // Doktorların bilgileri
     static getAll() {
-        return connection.execute(`SELECT * FROM doctor_department_info`);
+        return connection.execute(
+            `SELECT 
+                doctor.id as doctor_id,
+                doctor.name as doctor_name,
+                doctor.surname as doctor_surname,
+                
+                department.id as department_id,
+                department.name as department_name
+            FROM doctor
+            LEFT JOIN department ON doctor.department_id = department.id`
+        );
     }
 
+    // Toplam doktor sayısı
     static countAmount() {
         return connection.execute(`SELECT COUNT(*) as number FROM doctor`);
     }
 
-    static dailyNumberOfSicksOfDoctor() {
+    // Doktorların günlük hasta sayısı
+    static dailyNumberOfSickByDoctor() {
         return connection.execute(
-            `SELECT
-                DATE_FORMAT(doctor_sick.registration_date, '%Y-%m-%d') AS doctor_sick_registration_date,
+            `SELECT 
+                doctor.id as doctor_id,
                 doctor.name as doctor_name,
                 doctor.surname as doctor_surname,
-                COUNT(doctor_sick.id) AS number
-            FROM sick, doctor_sick, doctor
-            WHERE 
-                sick.id = doctor_sick.sick_id AND 
-                doctor.id = doctor_sick.doctor_id
-            GROUP BY doctor_sick_registration_date, doctor.id
-            ORDER BY doctor_sick_registration_date DESC, number DESC`
+                
+                DATE_FORMAT(sick.registration_date, '%Y-%m-%d') AS sick_registration_date,
+                COUNT(sick.id) AS number
+            FROM doctor
+            LEFT JOIN sick ON sick.doctor_id = doctor.id
+            GROUP BY sick_registration_date, doctor.id
+            ORDER BY number DESC`
         );
     }
 };
