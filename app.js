@@ -24,9 +24,11 @@ app.get("/", async (req, res) => {
     const count_doctor = await Doctor.countAmount();
     const count_sick = await Sick.countAmount();
 
-    const list_department = await Department.getAll();
-    const list_doctor = await Doctor.getAll();
-    const list_sick = await Sick.getAll();
+    const list_numberOfDoctorInDepartment =
+        await Department.numberOfDoctorInDepartment();
+    const list_numberOfSickByDepartment =
+        await Department.numberOfSickByDepartment();
+    const list_sumNumberOfSickByDoctor = await Doctor.sumNumberOfSickByDoctor();
 
     res.render("index", {
         title: "Hastane KDS",
@@ -35,9 +37,9 @@ app.get("/", async (req, res) => {
         count_doctor: count_doctor[0],
         count_sick: count_sick[0],
 
-        list_department: list_department[0],
-        list_doctor: list_doctor[0],
-        list_sick: list_sick[0],
+        list_numberOfDoctorInDepartment: list_numberOfDoctorInDepartment[0],
+        list_numberOfSickByDepartment: list_numberOfSickByDepartment[0],
+        list_sumNumberOfSickByDoctor: list_sumNumberOfSickByDoctor[0],
     });
 });
 

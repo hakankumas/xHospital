@@ -2,7 +2,7 @@ const connection = require("../database/db");
 
 module.exports = class Department {
     // Departman Bilgisi + Departmanlardaki doktor sayısı
-    static getAll() {
+    static numberOfDoctorInDepartment() {
         return connection.execute(
             `SELECT
                 department.id as department_id,
@@ -44,9 +44,9 @@ module.exports = class Department {
                 department.id as department_id,
                 department.name as department_name,
                 COUNT(sick.id) AS number
-            FROM sick 
-            LEFT JOIN doctor ON sick.doctor_id = doctor.id
-            LEFT JOIN department ON doctor.department_id = department.id
+            FROM department
+            LEFT JOIN doctor ON doctor.department_id = department.id
+            LEFT JOIN sick ON doctor.id = sick.doctor_id
             GROUP BY department.id
             ORDER BY number DESC`
         );

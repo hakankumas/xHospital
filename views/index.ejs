@@ -168,12 +168,12 @@
                             style="text-decoration: none; color: black"
                         >
                             <h5 class="text-center">
-                                Departmanlarımızın Bilgileri
+                                Departmanlardaki Doktor Sayıları
                             </h5>
                         </a>
                         <div>
                             <table
-                                id="table_department"
+                                id="table_departmentDoctor"
                                 class="display rounded"
                                 style="
                                     width: 100%;
@@ -182,95 +182,26 @@
                             >
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th class="text-center">ID</th>
                                         <th>Departman Adı</th>
-                                        <th>Doktor Sayısı</th>
-                                        <th class="text-center">Düzenle</th>
-                                        <th class="text-center">Sil</th>
+                                        <th class="text-center">
+                                            Doktor Sayısı
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% list_department.forEach(department => {%>
+                                    <!-- prettier-ignore -->
+                                    <% list_numberOfDoctorInDepartment.forEach(item => { %>
+                                    <!-- prettier-ignore -->
                                     <tr>
-                                        <td><%= department.department_id %></td>
+                                        <td class="text-center">
+                                            <%= item.department_id %>
+                                        </td>
                                         <td>
-                                            <%= department.department_name %>
+                                            <%= item.department_name %>
                                         </td>
-                                        <td><%= department.number %></td>
-                                        <td
-                                            class="text-center"
-                                            style="cursor: pointer"
-                                        >
-                                            <i
-                                                class="fa-solid fa-pen-to-square text-success"
-                                            ></i>
-                                        </td>
-                                        <td
-                                            class="text-center"
-                                            style="cursor: pointer"
-                                        >
-                                            <i
-                                                class="fa-solid fa-trash text-danger"
-                                            ></i>
-                                        </td>
-                                    </tr>
-                                    <% }) %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-4 border rounded border-dark p-3 mx-1">
-                        <a
-                            href="<%= baseURL %>/doctor"
-                            style="text-decoration: none; color: black"
-                        >
-                            <h5 class="text-center">
-                                Doktorlarımızın Bilgileri
-                            </h5>
-                        </a>
-                        <div>
-                            <table
-                                id="table_doctor"
-                                class="display rounded"
-                                style="
-                                    width: 100%;
-                                    background-color: whitesmoke;
-                                "
-                            >
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Ad</th>
-                                        <th>Soyad</th>
-                                        <th>Departman ID</th>
-                                        <th>Departman Adı</th>
-                                        <th class="text-center">Düzenle</th>
-                                        <th class="text-center">Sil</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% list_doctor.forEach(doctor => { %>
-                                    <tr>
-                                        <td><%= doctor.doctor_id %></td>
-                                        <td><%= doctor.doctor_name %></td>
-                                        <td><%= doctor.doctor_surname %></td>
-                                        <td><%= doctor.department_id %></td>
-                                        <td><%= doctor.department_name %></td>
-                                        <td
-                                            class="text-center"
-                                            style="cursor: pointer"
-                                        >
-                                            <i
-                                                class="fa-solid fa-pen-to-square text-success"
-                                            ></i>
-                                        </td>
-                                        <td
-                                            class="text-center"
-                                            style="cursor: pointer"
-                                        >
-                                            <i
-                                                class="fa-solid fa-trash text-danger"
-                                            ></i>
+                                        <td class="text-center">
+                                            <%= item.number %>
                                         </td>
                                     </tr>
                                     <% }) %>
@@ -284,12 +215,12 @@
                             style="text-decoration: none; color: black"
                         >
                             <h5 class="text-center">
-                                Hastalarımızın Bilgileri
+                                Departmanların Muayene Sayıları
                             </h5>
                         </a>
                         <div>
                             <table
-                                id="table_sick"
+                                id="table_department"
                                 class="display rounded"
                                 style="
                                     width: 100%;
@@ -298,54 +229,73 @@
                             >
                                 <thead>
                                     <tr>
-                                        <th>Muayene ID</th>
-                                        <th>Hasta TC</th>
-                                        <th>Hasta Ad</th>
-                                        <th>Hasta Soyad</th>
-                                        <th>Hasta Kayıt Tarihi</th>
-                                        <th>Doktor ID</th>
-                                        <th>Doktor Ad</th>
-                                        <th>Doktor Soyad</th>
-                                        <th>Departman ID</th>
-                                        <th>Departman Ad</th>
-                                        <th class="text-center">Düzenle</th>
-                                        <th class="text-center">Sil</th>
+                                        <th class="text-center">ID</th>
+                                        <th>Departman Adı</th>
+                                        <th class="text-center">
+                                            Muayene Sayısı
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% list_sick.forEach(sick => { %>
+                                    <!-- prettier-ignore -->
+                                    <% list_numberOfSickByDepartment.forEach(item => { %>
+                                    <!-- prettier-ignore -->
                                     <tr>
-                                        <td><%= sick.sick_id %></td>
-                                        <td><%= sick.sick_tc_no %></td>
-                                        <td><%= sick.sick_name %></td>
-                                        <td><%= sick.sick_surname %></td>
-                                        <td>
-                                            <%= new Intl.DateTimeFormat('tr-TR',
-                                            { day: '2-digit', month: 'long',
-                                            year: 'numeric' }).format(new
-                                            Date(sick.sick_registration_date))
-                                            %>
+                                        <td class="text-center">
+                                            <%= item.department_id %>
                                         </td>
-                                        <td><%= sick.doctor_id %></td>
-                                        <td><%= sick.doctor_name %></td>
-                                        <td><%= sick.doctor_surname %></td>
-                                        <td><%= sick.department_id %></td>
-                                        <td><%= sick.department_name %></td>
-                                        <td
-                                            class="text-center"
-                                            style="cursor: pointer"
-                                        >
-                                            <i
-                                                class="fa-solid fa-pen-to-square text-success"
-                                            ></i>
+                                        <td><%= item.department_name %></td>
+                                        <td class="text-center">
+                                            <%= item.number %>
                                         </td>
-                                        <td
-                                            class="text-center"
-                                            style="cursor: pointer"
-                                        >
-                                            <i
-                                                class="fa-solid fa-trash text-danger"
-                                            ></i>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-4 border rounded border-dark p-3 mx-1">
+                        <a
+                            href="<%= baseURL %>/doctor"
+                            style="text-decoration: none; color: black"
+                        >
+                            <h5 class="text-center">
+                                Doktorların Muayene Sayıları
+                            </h5>
+                        </a>
+                        <div>
+                            <table
+                                id="table_doctor"
+                                class="display rounded"
+                                style="
+                                    width: 100%;
+                                    background-color: whitesmoke;
+                                "
+                            >
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">ID</th>
+                                        <th>Doktor Adı</th>
+                                        <th>Doktor Soyadı</th>
+                                        <th>Departman Adı</th>
+                                        <th class="text-center">
+                                            Muayene Sayısı
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- prettier-ignore -->
+                                    <% list_sumNumberOfSickByDoctor.forEach(item => { %>
+                                    <!-- prettier-ignore -->
+                                    <tr>
+                                        <td class="text-center">
+                                            <%= item.doctor_id %>
+                                        </td>
+                                        <td><%= item.doctor_name %></td>
+                                        <td><%= item.doctor_surname %></td>
+                                        <td><%= item.department_name %></td>
+                                        <td class="text-center">
+                                            <%= item.number %>
                                         </td>
                                     </tr>
                                     <% }) %>
@@ -367,26 +317,25 @@
             crossorigin="anonymous"
         ></script>
         <script>
+            new DataTable("#table_departmentDoctor", {
+                paging: false,
+                scrollCollapse: true,
+                scrollY: "75vh",
+                order: [[2, "desc"]],
+            });
+
             new DataTable("#table_department", {
                 paging: false,
                 scrollCollapse: true,
                 scrollY: "75vh",
-                order: [
-                    [2, "desc"],
-                    [1, "asc"],
-                ],
+                order: [[2, "desc"]],
             });
 
             new DataTable("#table_doctor", {
                 paging: false,
                 scrollCollapse: true,
                 scrollY: "75vh",
-            });
-
-            new DataTable("#table_sick", {
-                paging: false,
-                scrollCollapse: true,
-                scrollY: "75vh",
+                order: [[4, "desc"]],
             });
         </script>
     </body>
