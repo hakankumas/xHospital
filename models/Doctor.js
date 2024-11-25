@@ -37,4 +37,22 @@ module.exports = class Doctor {
             ORDER BY number DESC`
         );
     }
+
+    // Doktorların toplam hasta sayısı
+    static sumNumberOfSickByDoctor() {
+        return connection.execute(
+            `SELECT 
+                doctor.id as doctor_id,
+                doctor.name as doctor_name,
+                doctor.surname as doctor_surname,
+                department.id as department_id,
+                department.name as department_name,
+                COUNT(sick.id) AS number
+            FROM doctor
+            LEFT JOIN sick ON sick.doctor_id = doctor.id
+            LEFT JOIN department ON doctor.department_id = department.id
+            GROUP BY doctor.id
+            ORDER BY number DESC`
+        );
+    }
 };
