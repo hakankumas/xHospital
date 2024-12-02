@@ -7,13 +7,13 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const departmentRoutes = require("./routes/department");
-const doctorRoutes = require("./routes/doctor");
-const sickRoutes = require("./routes/sick");
+// const departmentRoutes = require("./routes/department");
+// const doctorRoutes = require("./routes/doctor");
+// const sickRoutes = require("./routes/sick");
 
-app.use("/department", departmentRoutes);
-app.use("/doctor", doctorRoutes);
-app.use("/sick", sickRoutes);
+// app.use("/department", departmentRoutes);
+// app.use("/doctor", doctorRoutes);
+// app.use("/sick", sickRoutes);
 
 const Department = require("./models/Department");
 const Doctor = require("./models/Doctor");
@@ -31,7 +31,7 @@ app.get("/", async (req, res) => {
     const list_sumNumberOfSickByDoctor = await Doctor.sumNumberOfSickByDoctor();
 
     res.render("index", {
-        title: "Hastane KDS",
+        title: "Ana Sayfa | Hastane KDS",
 
         count_department: count_department[0],
         count_doctor: count_doctor[0],
@@ -40,6 +40,34 @@ app.get("/", async (req, res) => {
         list_numberOfDoctorInDepartment: list_numberOfDoctorInDepartment[0],
         list_numberOfSickByDepartment: list_numberOfSickByDepartment[0],
         list_sumNumberOfSickByDoctor: list_sumNumberOfSickByDoctor[0],
+    });
+});
+
+app.get("/department/", async (req, res) => {
+    const list_numberOfDoctorInDepartment =
+        await Department.numberOfDoctorInDepartment();
+    const list_numberOfSickByDepartment =
+        await Department.numberOfSickByDepartment();
+    res.render("./department/index", {
+        title: "Departmanlar | Hastane KDS",
+        list_numberOfDoctorInDepartment: list_numberOfDoctorInDepartment[0],
+        list_numberOfSickByDepartment: list_numberOfSickByDepartment[0],
+    });
+});
+
+app.get("/doctor/", async (req, res) => {
+    const list_sumNumberOfSickByDoctor = await Doctor.sumNumberOfSickByDoctor();
+    res.render("./doctor/index", {
+        title: "Doktorlar | Hastane KDS",
+        list_sumNumberOfSickByDoctor: list_sumNumberOfSickByDoctor[0],
+    });
+});
+
+app.get("/sick/", async (req, res) => {
+    const list_sick = await Sick.getAll();
+    res.render("./sick/index", {
+        title: "Hastalar | Hastane KDS",
+        list_sick: list_sick[0],
     });
 });
 

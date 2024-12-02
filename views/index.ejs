@@ -4,6 +4,7 @@
 <html lang="en">
     <head>
         <title><%= title %></title>
+        <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
         <meta charset="utf-8" />
         <meta
             name="viewport"
@@ -48,7 +49,7 @@
                     .then((data) => {
                         var chartData = new google.visualization.DataTable();
                         chartData.addColumn("string", "Günler");
-                        chartData.addColumn("number", "Hasta Sayısı");
+                        chartData.addColumn("number", "Muayene Sayısı");
                         data.dailySickAmount.forEach((item) => {
                             chartData.addRow([
                                 new Intl.DateTimeFormat("tr-TR", {
@@ -62,7 +63,7 @@
                             ]);
                         });
                         var options = {
-                            title: "Günlük Hasta Sayıları (Son 14 Gün)",
+                            title: "Günlük Muayene Sayıları (Son 14 Gün)",
                             titleTextStyle: {
                                 fontSize: 24,
                                 bold: true,
@@ -76,7 +77,7 @@
                                 slantedTextAngle: 90,
                             },
                             vAxis: {
-                                title: "Hasta Sayısı",
+                                title: "Muayene Sayısı",
                             },
                             chartArea: {
                                 top: 75, // Üst padding
@@ -155,153 +156,10 @@
                             class="px-5"
                         >
                             <div class="text-center">
-                                <h3>Hasta</h3>
+                                <h3>Muayene</h3>
                                 <h5>(<%= count_sick[0].number %>)</h5>
                             </div>
                         </a>
-                    </div>
-                </div>
-                <div class="col-md-12 py-3 px-4 d-flex justify-content-center">
-                    <div class="col-md-4 border rounded border-dark p-3 mx-1">
-                        <a
-                            href="<%= baseURL %>/department"
-                            style="text-decoration: none; color: black"
-                        >
-                            <h5 class="text-center">
-                                Departmanlardaki Doktor Sayıları
-                            </h5>
-                        </a>
-                        <div>
-                            <table
-                                id="table_departmentDoctor"
-                                class="display rounded"
-                                style="
-                                    width: 100%;
-                                    background-color: whitesmoke;
-                                "
-                            >
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">ID</th>
-                                        <th>Departman Adı</th>
-                                        <th class="text-center">
-                                            Doktor Sayısı
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- prettier-ignore -->
-                                    <% list_numberOfDoctorInDepartment.forEach(item => { %>
-                                    <!-- prettier-ignore -->
-                                    <tr>
-                                        <td class="text-center">
-                                            <%= item.department_id %>
-                                        </td>
-                                        <td>
-                                            <%= item.department_name %>
-                                        </td>
-                                        <td class="text-center">
-                                            <%= item.number %>
-                                        </td>
-                                    </tr>
-                                    <% }) %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-4 border rounded border-dark p-3 mx-1">
-                        <a
-                            href="<%= baseURL %>/sick"
-                            style="text-decoration: none; color: black"
-                        >
-                            <h5 class="text-center">
-                                Departmanların Muayene Sayıları
-                            </h5>
-                        </a>
-                        <div>
-                            <table
-                                id="table_department"
-                                class="display rounded"
-                                style="
-                                    width: 100%;
-                                    background-color: whitesmoke;
-                                "
-                            >
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">ID</th>
-                                        <th>Departman Adı</th>
-                                        <th class="text-center">
-                                            Muayene Sayısı
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- prettier-ignore -->
-                                    <% list_numberOfSickByDepartment.forEach(item => { %>
-                                    <!-- prettier-ignore -->
-                                    <tr>
-                                        <td class="text-center">
-                                            <%= item.department_id %>
-                                        </td>
-                                        <td><%= item.department_name %></td>
-                                        <td class="text-center">
-                                            <%= item.number %>
-                                        </td>
-                                    </tr>
-                                    <% }) %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-4 border rounded border-dark p-3 mx-1">
-                        <a
-                            href="<%= baseURL %>/doctor"
-                            style="text-decoration: none; color: black"
-                        >
-                            <h5 class="text-center">
-                                Doktorların Muayene Sayıları
-                            </h5>
-                        </a>
-                        <div>
-                            <table
-                                id="table_doctor"
-                                class="display rounded"
-                                style="
-                                    width: 100%;
-                                    background-color: whitesmoke;
-                                "
-                            >
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">ID</th>
-                                        <th>Doktor Adı</th>
-                                        <th>Doktor Soyadı</th>
-                                        <th>Departman Adı</th>
-                                        <th class="text-center">
-                                            Muayene Sayısı
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- prettier-ignore -->
-                                    <% list_sumNumberOfSickByDoctor.forEach(item => { %>
-                                    <!-- prettier-ignore -->
-                                    <tr>
-                                        <td class="text-center">
-                                            <%= item.doctor_id %>
-                                        </td>
-                                        <td><%= item.doctor_name %></td>
-                                        <td><%= item.doctor_surname %></td>
-                                        <td><%= item.department_name %></td>
-                                        <td class="text-center">
-                                            <%= item.number %>
-                                        </td>
-                                    </tr>
-                                    <% }) %>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -316,27 +174,5 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
-        <script>
-            new DataTable("#table_departmentDoctor", {
-                paging: false,
-                scrollCollapse: true,
-                scrollY: "75vh",
-                order: [[2, "desc"]],
-            });
-
-            new DataTable("#table_department", {
-                paging: false,
-                scrollCollapse: true,
-                scrollY: "75vh",
-                order: [[2, "desc"]],
-            });
-
-            new DataTable("#table_doctor", {
-                paging: false,
-                scrollCollapse: true,
-                scrollY: "75vh",
-                order: [[4, "desc"]],
-            });
-        </script>
     </body>
 </html>

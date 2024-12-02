@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Title</title>
+        <title><%= title %></title>
+        <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
         <meta charset="utf-8" />
         <meta
             name="viewport"
@@ -14,11 +15,78 @@
             crossorigin="anonymous"
         />
         <link rel="stylesheet" href="/css/style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css"
+        />
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     </head>
     <body>
         <%- include('../_partials/_navbar') %>
-        <div class="container">
-            <h1>sick/index</h1>
+        <div class="container-fluid px-5">
+            <div
+                class="row bg-success-subtle"
+                style="min-height: 100vh; height: 100%"
+            >
+                <div class="col-md-12 py-3 px-4 d-flex justify-content-center">
+                    <div class="col-md-6 border rounded border-dark p-3 mx-1">
+                        <h5 class="text-center">Hasta Bilgileri</h5>
+                        <div>
+                            <table
+                                id="table_sick"
+                                class="display rounded"
+                                style="
+                                    width: 100%;
+                                    background-color: whitesmoke;
+                                "
+                            >
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">TC</th>
+                                        <th>Hasta</th>
+                                        <th>Doktor</th>
+                                        <th>Departman</th>
+                                        <th class="text-center">
+                                            Muayene Tarihi
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- prettier-ignore -->
+                                    <% list_sick.forEach(item => { %>
+                                    <!-- prettier-ignore -->
+                                    <tr>
+                                        <td class="text-center"><%= item.sick_tc_no %></td>
+                                        <td><%= `${item.sick_name} ${item.sick_surname}` %></td>
+                                        <td><%= `${item.doctor_name} ${item.doctor_surname}` %></td>
+                                        <td><%= item.department_name %></td>
+                                        <td class="text-center"><%= new Intl.DateTimeFormat("tr-TR", { day: "numeric", month: "short", year: "numeric" }).format(new Date(item.sick_registration_date)) %></td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6 border rounded border-dark p-3 mx-1">
+                        <div
+                            class="col-md-12 border rounded border-dark p-3 mx-1"
+                        >
+                            1
+                        </div>
+                        <div
+                            class="col-md-12 border rounded border-dark p-3 mx-1"
+                        >
+                            2
+                        </div>
+                        <div
+                            class="col-md-12 border rounded border-dark p-3 mx-1"
+                        >
+                            3
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -31,5 +99,13 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+        <script>
+            new DataTable("#table_sick", {
+                paging: false,
+                scrollCollapse: true,
+                scrollY: "75vh",
+                order: [[4, "desc"]],
+            });
+        </script>
     </body>
 </html>

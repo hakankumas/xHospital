@@ -17,7 +17,20 @@ module.exports = class Department {
 
     // Toplam departman sayısı
     static countAmount() {
-        return connection.execute(`SELECT COUNT(*) as number FROM department`);
+        // return connection.execute(`SELECT COUNT(*) as number FROM department`);
+        return connection.execute(
+            `SELECT COUNT( * ) as number
+            FROM (
+                SELECT
+                    department.id AS department_id,
+                    department.name AS department_name,
+                    COUNT(doctor.id) AS amount
+                FROM department
+                LEFT JOIN doctor ON doctor.department_id = department.id
+                GROUP BY department.id
+                HAVING amount != 0
+            ) as subquery`
+        );
     }
 
     // Departmanların günlük hasta sayısı
