@@ -29,6 +29,8 @@
             google.charts.load("current", { packages: ["corechart"] });
             google.charts.setOnLoadCallback(drawChart1);
             google.charts.setOnLoadCallback(drawChart2);
+            google.charts.setOnLoadCallback(drawChart3);
+
             function drawChart1() {
                 fetch("http://localhost:3000/api/genderBySickid")
                     .then((response) => response.json())
@@ -68,6 +70,7 @@
                         );
                     });
             }
+
             function drawChart2() {
                 fetch("http://localhost:3000/api/genderByTcno")
                     .then((response) => response.json())
@@ -96,6 +99,46 @@
 
                         const chart = new google.visualization.PieChart(
                             document.getElementById("piechart2")
+                        );
+
+                        chart.draw(dataTable, options);
+                    })
+                    .catch((error) => {
+                        console.error(
+                            "API çağrısı sırasında bir hata oluştu:",
+                            error
+                        );
+                    });
+            }
+
+            function drawChart3() {
+                fetch("http://localhost:3000/api/numberOfSickByDepartment")
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const chartData = [["Departman Adı", "Muayene Sayısı"]]; // Başlık ekleniyor
+
+                        // API'den dönen verileri formatlayarak chartData'ya ekliyoruz
+                        data.numberOfSickByDepartment.forEach((item) => {
+                            chartData.push([item.department_name, item.number]);
+                        });
+
+                        // Google Charts veri formatına dönüştürülüyor
+                        const dataTable =
+                            google.visualization.arrayToDataTable(chartData);
+
+                        const options = {
+                            title: "Hastaların Muayene Oldukları Departman Dağılımları",
+                            titleTextStyle: {
+                                fontSize: 18,
+                                bold: true,
+                            },
+                            chartArea: {
+                                top: 85, // Üst padding
+                            },
+                        };
+
+                        const chart = new google.visualization.PieChart(
+                            document.getElementById("piechart3")
                         );
 
                         chart.draw(dataTable, options);
@@ -156,6 +199,17 @@
                         </div>
                     </div>
                     <div class="col-md-6 p-3 mx-1">
+                        <div
+                            class="col-md-12"
+                            style="min-height: 20vh; translate: 0px -15px"
+                        >
+                            <div
+                                id="piechart3"
+                                style="min-width: 100%; height: 300px"
+                            ></div>
+                        </div>
+                        <hr style="translate: 0px -15px" />
+
                         <div
                             class="col-md-12"
                             style="min-height: 20vh; translate: 0px -15px"

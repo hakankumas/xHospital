@@ -102,6 +102,15 @@ app.get("/api/genderByTcno", async (req, res) => {
     });
 });
 
+app.get("/api/numberOfSickByDepartment", async (req, res) => {
+    const numberOfSickByDepartment =
+        await Department.numberOfSickByDepartment();
+
+    res.status(200).json({
+        numberOfSickByDepartment: numberOfSickByDepartment[0],
+    });
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`);
