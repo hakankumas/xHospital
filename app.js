@@ -102,6 +102,14 @@ app.get("/api/genderByTcno", async (req, res) => {
     });
 });
 
+app.get("/api/genderByDoctor", async (req, res) => {
+    const genderByDoctor = await Doctor.genderByDoctor();
+
+    res.status(200).json({
+        genderByDoctor: genderByDoctor[0],
+    });
+});
+
 app.get("/api/numberOfSickByDepartment", async (req, res) => {
     const numberOfSickByDepartment =
         await Department.numberOfSickByDepartment();
