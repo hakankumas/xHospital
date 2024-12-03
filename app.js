@@ -79,6 +79,15 @@ app.get("/api/dailySickAmount", async (req, res) => {
     });
 });
 
+app.get("/api/dailyNumberOfSickByDepartment", async (req, res) => {
+    const dailyNumberOfSickByDepartment =
+        await Department.dailyNumberOfSickByDepartment();
+
+    res.status(200).json({
+        dailyNumberOfSickByDepartment: dailyNumberOfSickByDepartment[0],
+    });
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`);

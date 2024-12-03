@@ -30,6 +30,116 @@
         />
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
         <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+        <script
+            type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"
+        ></script>
+        <script type="text/javascript">
+            google.charts.load("current", { packages: ["corechart"] });
+            google.charts.setOnLoadCallback(drawVisualization);
+
+            function drawVisualization() {
+                fetch("http://localhost:3000/api/dailyNumberOfSickByDepartment")
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        const formattedData = {};
+                        data.dailyNumberOfSickByDepartment.forEach((item) => {
+                            const {
+                                department_name,
+                                sick_registration_date,
+                                number,
+                            } = item;
+
+                            if (!formattedData[sick_registration_date]) {
+                                formattedData[sick_registration_date] = {
+                                    date: new Intl.DateTimeFormat("tr-TR", {
+                                        day: "numeric",
+                                        month: "short",
+                                        year: "numeric",
+                                    }).format(new Date(sick_registration_date)),
+                                };
+                            }
+                            formattedData[sick_registration_date][
+                                department_name
+                            ] = number;
+                        });
+
+                        // Tüm departmanları bul ve sütun başlıklarını oluştur
+                        const departments = [
+                            ...new Set(
+                                data.dailyNumberOfSickByDepartment.map(
+                                    (item) => item.department_name
+                                )
+                            ),
+                        ];
+                        const chartDataArray = [["Tarih", ...departments]];
+
+                        // Veriyi tabloya dönüştür
+                        Object.values(formattedData).forEach((row) => {
+                            const rowArray = [row.date];
+                            departments.forEach((department) => {
+                                rowArray.push(row[department] || 0); // Eksik veriler için 0 ekle
+                            });
+                            chartDataArray.push(rowArray);
+                        });
+
+                        // Veriyi Google Charts için formatla
+                        const chartData =
+                            google.visualization.arrayToDataTable(
+                                chartDataArray
+                            );
+
+                        // Grafik seçeneklerini tanımla
+                        const options = {
+                            title: "Departmanların Günlük Muayene Sayıları",
+                            titleTextStyle: {
+                                fontSize: 24,
+                                bold: true,
+                            },
+                            vAxis: { title: "Muayene Sayısı" },
+                            hAxis: {
+                                title: "Tarih",
+                                format: "M/d/yy",
+                                slantedText: true,
+                                slantedTextAngle: 90,
+                            },
+                            seriesType: "bars",
+                            series: { [departments.length]: { type: "line" } },
+                            chartArea: {
+                                top: 75, // Üst padding
+                                right: 200, // Sağ padding
+                                bottom: 175, // Alt padding
+                                left: 200, // Sol padding
+                            },
+                        };
+
+                        // Grafiği çiz
+                        const chart = new google.visualization.ComboChart(
+                            document.getElementById("chart_div")
+                        );
+                        chart.draw(chartData, options);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching data:", error);
+                        alert(
+                            "Veri alınırken bir hata oluştu. Lütfen tekrar deneyin."
+                        );
+                    });
+            }
+        </script>
+
+        <style>
+            .hover_box:hover {
+                border: 1px solid;
+                border-radius: 25px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            }
+        </style>
     </head>
     <body>
         <%- include('../_partials/_navbar') %>
@@ -39,7 +149,13 @@
                 style="min-height: 100vh; height: 100%"
             >
                 <div class="col-md-12 py-3 px-4 d-flex flex-wrap">
-                    <div class="col-md-6 border border-dark p-3">
+                    <div class="col-md-12 p-3">
+                        <div
+                            id="chart_div"
+                            style="min-width: 100%; height: 500px"
+                        ></div>
+                    </div>
+                    <div class="col-md-6 py-3 px-5 hover_box">
                         <h5 class="text-center">
                             Departmanlardaki Doktor Sayıları
                         </h5>
@@ -81,7 +197,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-md-6 border border-dark p-3">
+                    <div class="col-md-6 py-3 px-5 hover_box">
                         <h5 class="text-center">
                             Departmanların Muayene Sayıları
                         </h5>
@@ -121,8 +237,9 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-md-6 border border-dark p-3">3</div>
-                    <div class="col-md-6 border border-dark p-3">4</div>
+
+                    <div class="col-md-6 p-3 hover_box">1</div>
+                    <div class="col-md-6 p-3 hover_box">2</div>
                 </div>
             </div>
         </div>
