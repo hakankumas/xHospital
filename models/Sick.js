@@ -47,4 +47,26 @@ module.exports = class Sick {
             ORDER BY sick_registration_date DESC, number DESC`
         );
     }
+
+    // Muayene Edilen Hastaların Cinsiyet Dağılımı (Muayene ID Bazlı)
+    static genderBySickid() {
+        return connection.execute(
+            `SELECT gender.name AS gender_name, COUNT(sick.id) as number
+            FROM gender
+            LEFT JOIN sick ON gender.id = sick.gender_id
+            GROUP BY gender.id
+            ORDER BY number DESC`
+        );
+    }
+
+    // Muayene Edilen Hastaların Cinsiyet Dağılımı (TC No Bazlı)
+    static genderByTcno() {
+        return connection.execute(
+            `SELECT gender.name AS gender_name, COUNT(DISTINCT sick.tc_no) AS number
+            FROM gender
+            LEFT JOIN sick ON gender.id = sick.gender_id
+            GROUP BY gender.id
+            ORDER BY number DESC`
+        );
+    }
 };

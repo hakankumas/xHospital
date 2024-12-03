@@ -2,19 +2,19 @@ const connection = require("../database/db");
 
 module.exports = class Doctor {
     // Doktorların bilgileri
-    static getAll() {
-        return connection.execute(
-            `SELECT 
-                doctor.id as doctor_id,
-                doctor.name as doctor_name,
-                doctor.surname as doctor_surname,
-                
-                department.id as department_id,
-                department.name as department_name
-            FROM doctor
-            LEFT JOIN department ON doctor.department_id = department.id`
-        );
-    }
+    // static getAll() {
+    //     return connection.execute(
+    //         `SELECT
+    //             doctor.id as doctor_id,
+    //             doctor.name as doctor_name,
+    //             doctor.surname as doctor_surname,
+
+    //             department.id as department_id,
+    //             department.name as department_name
+    //         FROM doctor
+    //         LEFT JOIN department ON doctor.department_id = department.id`
+    //     );
+    // }
 
     // Toplam doktor sayısı
     static countAmount() {

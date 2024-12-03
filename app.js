@@ -24,22 +24,12 @@ app.get("/", async (req, res) => {
     const count_doctor = await Doctor.countAmount();
     const count_sick = await Sick.countAmount();
 
-    const list_numberOfDoctorInDepartment =
-        await Department.numberOfDoctorInDepartment();
-    const list_numberOfSickByDepartment =
-        await Department.numberOfSickByDepartment();
-    const list_sumNumberOfSickByDoctor = await Doctor.sumNumberOfSickByDoctor();
-
     res.render("index", {
         title: "Ana Sayfa | Hastane KDS",
 
         count_department: count_department[0],
         count_doctor: count_doctor[0],
         count_sick: count_sick[0],
-
-        list_numberOfDoctorInDepartment: list_numberOfDoctorInDepartment[0],
-        list_numberOfSickByDepartment: list_numberOfSickByDepartment[0],
-        list_sumNumberOfSickByDoctor: list_sumNumberOfSickByDoctor[0],
     });
 });
 
@@ -93,6 +83,22 @@ app.get("/api/dailyNumberOfSickByDoctor", async (req, res) => {
 
     res.status(200).json({
         dailyNumberOfSickByDoctor: dailyNumberOfSickByDoctor[0],
+    });
+});
+
+app.get("/api/genderBySickid", async (req, res) => {
+    const genderBySickid = await Sick.genderBySickid();
+
+    res.status(200).json({
+        genderBySickid: genderBySickid[0],
+    });
+});
+
+app.get("/api/genderByTcno", async (req, res) => {
+    const genderByTcno = await Sick.genderByTcno();
+
+    res.status(200).json({
+        genderByTcno: genderByTcno[0],
     });
 });
 
