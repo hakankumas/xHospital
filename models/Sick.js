@@ -36,9 +36,15 @@ module.exports = class Sick {
                 DATE_FORMAT(sick.registration_date, '%Y-%m-%d') AS sick_registration_date,
                 COUNT(sick.id) as number
             FROM sick
+            INNER JOIN (
+                SELECT DATE_FORMAT(sick.registration_date, '%Y-%m-%d') AS sick_registration_date
+                FROM sick
+                GROUP BY sick_registration_date
+                ORDER BY sick_registration_date DESC
+                LIMIT 14
+            ) AS recent_dates ON DATE_FORMAT(sick.registration_date, '%Y-%m-%d') = recent_dates.sick_registration_date
             GROUP BY sick_registration_date
-            ORDER BY sick_registration_date DESC, number DESC
-            LIMIT 14`
+            ORDER BY sick_registration_date DESC, number DESC`
         );
     }
 };

@@ -44,6 +44,13 @@ module.exports = class Department {
             FROM sick 
             LEFT JOIN doctor ON sick.doctor_id = doctor.id
             LEFT JOIN department ON doctor.department_id = department.id
+            INNER JOIN (
+                SELECT DATE_FORMAT(sick.registration_date, '%Y-%m-%d') AS sick_registration_date
+                FROM sick
+                GROUP BY sick_registration_date
+                ORDER BY sick_registration_date DESC
+                LIMIT 14
+            ) AS recent_dates ON DATE_FORMAT(sick.registration_date, '%Y-%m-%d') = recent_dates.sick_registration_date
             GROUP BY sick_registration_date, department.id
             ORDER BY sick_registration_date DESC, number DESC
             `

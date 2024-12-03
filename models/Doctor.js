@@ -25,16 +25,21 @@ module.exports = class Doctor {
     static dailyNumberOfSickByDoctor() {
         return connection.execute(
             `SELECT 
-                doctor.id as doctor_id,
-                doctor.name as doctor_name,
-                doctor.surname as doctor_surname,
-                
+                doctor.id AS doctor_id,
+                CONCAT(doctor.name, ' ', doctor.surname) AS doctor_fullname,
                 DATE_FORMAT(sick.registration_date, '%Y-%m-%d') AS sick_registration_date,
                 COUNT(sick.id) AS number
             FROM doctor
             LEFT JOIN sick ON sick.doctor_id = doctor.id
+            INNER JOIN (
+                SELECT DATE_FORMAT(sick.registration_date, '%Y-%m-%d') AS sick_registration_date
+                FROM sick
+                GROUP BY sick_registration_date
+                ORDER BY sick_registration_date DESC
+                LIMIT 14
+            ) AS recent_dates ON DATE_FORMAT(sick.registration_date, '%Y-%m-%d') = recent_dates.sick_registration_date
             GROUP BY sick_registration_date, doctor.id
-            ORDER BY number DESC`
+            ORDER BY sick_registration_date DESC, number DESC`
         );
     }
 

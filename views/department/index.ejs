@@ -16,7 +16,7 @@
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="stylesheet" href="../../public/css/style.css" />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
@@ -96,7 +96,7 @@
 
                         // Grafik seçeneklerini tanımla
                         const options = {
-                            title: "Departmanların Günlük Muayene Sayıları",
+                            title: "Departmanların Günlük Muayene Sayıları (Son 14 Gün)",
                             titleTextStyle: {
                                 fontSize: 24,
                                 bold: true,
@@ -112,9 +112,9 @@
                             series: { [departments.length]: { type: "line" } },
                             chartArea: {
                                 top: 75, // Üst padding
-                                right: 200, // Sağ padding
+                                right: 300, // Sağ padding
                                 bottom: 175, // Alt padding
-                                left: 200, // Sol padding
+                                left: 150, // Sol padding
                             },
                         };
 
@@ -191,7 +191,7 @@
                     </div>
                     <div class="col-md-6 py-3 px-5 hover_box">
                         <h5 class="text-center">
-                            Departmanların Muayene Sayıları
+                            Departmanların Toplam Muayene Sayıları
                         </h5>
                         <div>
                             <table
