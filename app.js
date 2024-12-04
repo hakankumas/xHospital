@@ -33,6 +33,12 @@ app.get("/", async (req, res) => {
     });
 });
 
+app.get("/login", async (req, res) => {
+    res.render("login", {
+        title: "Admin Giriş | Hastane KDS",
+    });
+});
+
 app.get("/department/", async (req, res) => {
     const list_numberOfDoctorInDepartment =
         await Department.numberOfDoctorInDepartment();
