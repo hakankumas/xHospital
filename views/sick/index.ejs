@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="theme-name" content="quixlab" />
         <title><%= title %></title>
         <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        <link
+            href="theme/plugins/pg-calendar/css/pignose.calendar.min.css"
+            rel="stylesheet"
         />
         <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
+            href="theme/plugins/chartist/css/chartist.min.css"
         />
-        <link rel="stylesheet" href="/css/style.css" />
+        <link
+            rel="stylesheet"
+            href="theme/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css"
+        />
+        <link href="theme/css/style.css" rel="stylesheet" />
         <link
             rel="stylesheet"
             href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css"
@@ -152,103 +157,152 @@
             }
         </script>
     </head>
-    <body>
-        <%- include('../_partials/_navbar') %>
-        <div class="container-fluid px-5">
-            <div
-                class="row bg-success-subtle"
-                style="min-height: 100vh; height: 100%"
-            >
-                <div class="col-md-12 py-3 px-4 d-flex justify-content-center">
-                    <div class="col-md-6 p-3 mx-1 tablebgcolor">
-                        <h5 class="text-center">Hasta Bilgileri</h5>
-                        <div>
-                            <table
-                                id="table_sick"
-                                class="display rounded"
-                                style="
-                                    width: 100%;
-                                    background-color: whitesmoke;
-                                "
-                            >
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">TC No</th>
-                                        <th>Hasta</th>
-                                        <th>Doktor</th>
-                                        <th>Departman</th>
-                                        <th class="text-center">
-                                            Muayene Tarihi
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- prettier-ignore -->
-                                    <% list_sick.forEach(item => { %>
-                                    <!-- prettier-ignore -->
-                                    <tr>
-                                        <td class="text-center"><%= item.sick_tc_no %></td>
-                                        <td><%= `${item.sick_name} ${item.sick_surname}` %></td>
-                                        <td><%= `${item.doctor_name} ${item.doctor_surname}` %></td>
-                                        <td><%= item.department_name %></td>
-                                        <td class="text-center"><%= new Intl.DateTimeFormat("tr-TR", { day: "numeric", month: "short", year: "numeric" }).format(new Date(item.sick_registration_date)) %></td>
-                                    </tr>
-                                    <% }) %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-6 p-3 mx-1">
-                        <div
-                            class="col-md-12"
-                            style="min-height: 20vh; translate: 0px -15px"
-                        >
-                            <div
-                                id="piechart3"
-                                style="min-width: 100%; height: 300px"
-                            ></div>
-                        </div>
-                        <hr style="translate: 0px -15px" />
 
-                        <div
-                            class="col-md-12"
-                            style="min-height: 20vh; translate: 0px -15px"
-                        >
-                            <div
-                                id="piechart1"
-                                style="min-width: 100%; height: 300px"
-                            ></div>
+    <body>
+        <%- include('../_partials/_preloader.ejs') %>
+        <div id="main-wrapper">
+            <%- include('../_partials/_logo.ejs') %> <%-
+            include('../_partials/_header.ejs') %> <%-
+            include('../_partials/_sidebar.ejs') %>
+            <div class="content-body">
+                <div class="container-fluid mt-3">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h1
+                                        class="text-center"
+                                        style="font-size: 24px"
+                                    >
+                                        Hasta Bilgileri
+                                    </h1>
+                                    <div>
+                                        <table
+                                            id="table_sick"
+                                            class="display rounded"
+                                            style="
+                                                width: 100%;
+                                                background-color: whitesmoke;
+                                            "
+                                        >
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">
+                                                        TC No
+                                                    </th>
+                                                    <th>Hasta</th>
+                                                    <th>Doktor</th>
+                                                    <th>Departman</th>
+                                                    <th class="text-center">
+                                                        Muayene Tarihi
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- prettier-ignore -->
+                                                <% list_sick.forEach(item => { %>
+                                                <!-- prettier-ignore -->
+                                                <tr>
+                                                    <td class="text-center"><%= item.sick_tc_no %></td>
+                                                    <td><%= `${item.sick_name} ${item.sick_surname}` %></td>
+                                                    <td><%= `${item.doctor_name} ${item.doctor_surname}` %></td>
+                                                    <td><%= item.department_name %></td>
+                                                    <td class="text-center"><%= new Intl.DateTimeFormat("tr-TR", { day: "numeric", month: "short", year: "numeric" }).format(new Date(item.sick_registration_date)) %></td>
+                                                </tr>
+                                                <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <hr style="translate: 0px -15px" />
-                        <div
-                            class="col-md-12"
-                            style="min-height: 20vh; translate: 0px -15px"
-                        >
-                            <div
-                                id="piechart2"
-                                style="min-width: 100%; height: 300px"
-                            ></div>
+                        <div class="col-12 col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div
+                                        class="col-md-12"
+                                        style="
+                                            min-height: 20vh;
+                                            translate: 0px -15px;
+                                        "
+                                    >
+                                        <div
+                                            id="piechart3"
+                                            style="
+                                                min-width: 100%;
+                                                height: 300px;
+                                            "
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div
+                                        class="col-md-12"
+                                        style="
+                                            min-height: 20vh;
+                                            translate: 0px -15px;
+                                        "
+                                    >
+                                        <div
+                                            id="piechart1"
+                                            style="
+                                                min-width: 100%;
+                                                height: 300px;
+                                            "
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div
+                                        class="col-md-12"
+                                        style="
+                                            min-height: 20vh;
+                                            translate: 0px -15px;
+                                        "
+                                    >
+                                        <div
+                                            id="piechart2"
+                                            style="
+                                                min-width: 100%;
+                                                height: 300px;
+                                            "
+                                        ></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
-
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
+        <script src="theme/plugins/common/common.min.js"></script>
+        <script src="theme/js/custom.min.js"></script>
+        <script src="theme/js/settings.js"></script>
+        <script src="theme/js/gleek.js"></script>
+        <script src="theme/js/styleSwitcher.js"></script>
+        <script src="theme/plugins/chart.js/Chart.bundle.min.js"></script>
+        <script src="theme/plugins/circle-progress/circle-progress.min.js"></script>
+        <script src="theme/plugins/d3v3/index.js"></script>
+        <script src="theme/plugins/topojson/topojson.min.js"></script>
+        <script src="theme/plugins/datamaps/datamaps.world.min.js"></script>
+        <script src="theme/plugins/raphael/raphael.min.js"></script>
+        <script src="theme/plugins/morris/morris.min.js"></script>
+        <script src="theme/plugins/moment/moment.min.js"></script>
+        <script src="theme/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+        <script src="theme/plugins/chartist/js/chartist.min.js"></script>
+        <script src="theme/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+        <script src="theme/js/dashboard/dashboard-1.js"></script>
         <script>
             new DataTable("#table_sick", {
                 paging: false,
                 scrollCollapse: true,
-                scrollY: "75vh",
+                scrollY: "100vh",
                 order: [[4, "desc"]],
             });
         </script>

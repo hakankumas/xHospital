@@ -1,29 +1,25 @@
-<% const baseURL = "http://localhost:3000"; %>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="theme-name" content="quixlab" />
         <title><%= title %></title>
         <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        <link
+            href="theme/plugins/pg-calendar/css/pignose.calendar.min.css"
+            rel="stylesheet"
         />
         <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
+            href="theme/plugins/chartist/css/chartist.min.css"
         />
-        <link rel="stylesheet" href="/css/style.css" />
         <link
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
-            integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
+            href="theme/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css"
         />
+        <link href="theme/css/style.css" rel="stylesheet" />
         <link
             rel="stylesheet"
             href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css"
@@ -133,118 +129,143 @@
             }
         </script>
     </head>
-    <body>
-        <%- include('../_partials/_navbar') %>
-        <div class="container-fluid px-5">
-            <div
-                class="row bg-success-subtle"
-                style="min-height: 100vh; height: 100%"
-            >
-                <div class="col-md-12 py-3 px-4 d-flex flex-wrap">
-                    <div class="col-md-12 pb-3">
-                        <div
-                            id="chart_div"
-                            style="min-width: 100%; height: 500px"
-                        ></div>
-                    </div>
-                    <div class="col-md-6 py-3 px-5 hover_box tablebgcolor">
-                        <h5 class="text-center">
-                            Departmanlardaki Doktor Sayıları
-                        </h5>
-                        <div>
-                            <table
-                                id="table_departmentDoctor"
-                                class="display rounded"
-                                style="
-                                    width: 100%;
-                                    background-color: whitesmoke;
-                                "
-                            >
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">ID</th>
-                                        <th>Departman Adı</th>
-                                        <th class="text-center">
-                                            Doktor Sayısı
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- prettier-ignore -->
-                                    <% list_numberOfDoctorInDepartment.forEach(item => { %>
-                                    <!-- prettier-ignore -->
-                                    <tr>
-                                        <td class="text-center">
-                                            <%= item.department_id %>
-                                        </td>
-                                        <td>
-                                            <%= item.department_name %>
-                                        </td>
-                                        <td class="text-center">
-                                            <%= item.number %>
-                                        </td>
-                                    </tr>
-                                    <% }) %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-6 py-3 px-5 hover_box tablebgcolor">
-                        <h5 class="text-center">
-                            Departmanların Toplam Muayene Sayıları
-                        </h5>
-                        <div>
-                            <table
-                                id="table_department"
-                                class="display rounded"
-                                style="
-                                    width: 100%;
-                                    background-color: whitesmoke;
-                                "
-                            >
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">ID</th>
-                                        <th>Departman Adı</th>
-                                        <th class="text-center">
-                                            Muayene Sayısı
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- prettier-ignore -->
-                                    <% list_numberOfSickByDepartment.forEach(item => { %>
-                                    <!-- prettier-ignore -->
-                                    <tr>
-                                        <td class="text-center">
-                                            <%= item.department_id %>
-                                        </td>
-                                        <td><%= item.department_name %></td>
-                                        <td class="text-center">
-                                            <%= item.number %>
-                                        </td>
-                                    </tr>
-                                    <% }) %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
 
-                    <div class="col-md-6 p-3 hover_box">1</div>
-                    <div class="col-md-6 p-3 hover_box">2</div>
+    <body>
+        <%- include('../_partials/_preloader.ejs') %>
+        <div id="main-wrapper">
+            <%- include('../_partials/_logo.ejs') %> <%-
+            include('../_partials/_header.ejs') %> <%-
+            include('../_partials/_sidebar.ejs') %>
+            <div class="content-body">
+                <div class="container-fluid mt-3">
+                    <div class="row">
+                        <div class="col-12 col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div
+                                        id="chart_div"
+                                        style="min-width: 100%; height: 500px"
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex">
+                        <div class="col-12 col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-center">
+                                        Departmanlardaki Doktor Sayıları
+                                    </h5>
+                                    <div>
+                                        <table
+                                            id="table_departmentDoctor"
+                                            class="display rounded"
+                                            style="
+                                                width: 100%;
+                                                background-color: whitesmoke;
+                                            "
+                                        >
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">
+                                                        ID
+                                                    </th>
+                                                    <th>Departman Adı</th>
+                                                    <th class="text-center">
+                                                        Doktor Sayısı
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- prettier-ignore -->
+                                                <% list_numberOfDoctorInDepartment.forEach(item => { %>
+                                                <!-- prettier-ignore -->
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <%= item.department_id %>
+                                                    </td>
+                                                    <td>
+                                                        <%= item.department_name %>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <%= item.number %>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="text-center">
+                                        Departmanların Toplam Muayene Sayıları
+                                    </h5>
+                                    <div>
+                                        <table
+                                            id="table_department"
+                                            class="display rounded"
+                                            style="
+                                                width: 100%;
+                                                background-color: whitesmoke;
+                                            "
+                                        >
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">
+                                                        ID
+                                                    </th>
+                                                    <th>Departman Adı</th>
+                                                    <th class="text-center">
+                                                        Muayene Sayısı
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- prettier-ignore -->
+                                                <% list_numberOfSickByDepartment.forEach(item => { %>
+                                                <!-- prettier-ignore -->
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <%= item.department_id %>
+                                                    </td>
+                                                    <td><%= item.department_name %></td>
+                                                    <td class="text-center">
+                                                        <%= item.number %>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
+        <script src="theme/plugins/common/common.min.js"></script>
+        <script src="theme/js/custom.min.js"></script>
+        <script src="theme/js/settings.js"></script>
+        <script src="theme/js/gleek.js"></script>
+        <script src="theme/js/styleSwitcher.js"></script>
+        <script src="theme/plugins/chart.js/Chart.bundle.min.js"></script>
+        <script src="theme/plugins/circle-progress/circle-progress.min.js"></script>
+        <script src="theme/plugins/d3v3/index.js"></script>
+        <script src="theme/plugins/topojson/topojson.min.js"></script>
+        <script src="theme/plugins/datamaps/datamaps.world.min.js"></script>
+        <script src="theme/plugins/raphael/raphael.min.js"></script>
+        <script src="theme/plugins/morris/morris.min.js"></script>
+        <script src="theme/plugins/moment/moment.min.js"></script>
+        <script src="theme/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+        <script src="theme/plugins/chartist/js/chartist.min.js"></script>
+        <script src="theme/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+        <script src="theme/js/dashboard/dashboard-1.js"></script>
         <script>
             new DataTable("#table_departmentDoctor", {
                 paging: false,

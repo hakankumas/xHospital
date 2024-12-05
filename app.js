@@ -26,16 +26,11 @@ app.get("/", async (req, res) => {
 
     res.render("index", {
         title: "Ana Sayfa | Hastane KDS",
+        subtitle: "Ana Sayfa | Hastane Karar Destek Sistemleri",
 
         count_department: count_department[0],
         count_doctor: count_doctor[0],
         count_sick: count_sick[0],
-    });
-});
-
-app.get("/index2", async (req, res) => {
-    res.render("index2", {
-        title: "Ana Sayfa2 | Hastane KDS",
     });
 });
 
@@ -52,6 +47,8 @@ app.get("/department/", async (req, res) => {
         await Department.numberOfSickByDepartment();
     res.render("./department/index", {
         title: "Departmanlar | Hastane KDS",
+        subtitle: "Departmanlar | Hastane Karar Destek Sistemleri",
+
         list_numberOfDoctorInDepartment: list_numberOfDoctorInDepartment[0],
         list_numberOfSickByDepartment: list_numberOfSickByDepartment[0],
     });
@@ -61,6 +58,8 @@ app.get("/doctor/", async (req, res) => {
     const list_sumNumberOfSickByDoctor = await Doctor.sumNumberOfSickByDoctor();
     res.render("./doctor/index", {
         title: "Doktorlar | Hastane KDS",
+        subtitle: "Doktorlar | Hastane Karar Destek Sistemleri",
+
         list_sumNumberOfSickByDoctor: list_sumNumberOfSickByDoctor[0],
     });
 });
@@ -69,6 +68,8 @@ app.get("/sick/", async (req, res) => {
     const list_sick = await Sick.getAll();
     res.render("./sick/index", {
         title: "Hastalar | Hastane KDS",
+        subtitle: "Hastalar | Hastane Karar Destek Sistemleri",
+
         list_sick: list_sick[0],
     });
 });
