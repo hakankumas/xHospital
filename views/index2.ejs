@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="theme-name" content="quixlab" />
+        <title><%= title %></title>
+        <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
+        <link
+            href="theme/plugins/pg-calendar/css/pignose.calendar.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="theme/plugins/chartist/css/chartist.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="theme/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css"
+        />
+        <link href="theme/css/style.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div id="preloader">
+            <div class="loader">
+                <svg class="circular" viewBox="25 25 50 50">
+                    <circle
+                        class="path"
+                        cx="50"
+                        cy="50"
+                        r="20"
+                        fill="none"
+                        stroke-width="3"
+                        stroke-miterlimit="10"
+                    />
+                </svg>
+            </div>
+        </div>
+        <div id="main-wrapper">
+            <div class="nav-header">
+                <div
+                    class="brand-logo d-flex align-items-center justify-content-center"
+                    style="translate: 0px -15px"
+                >
+                    <a href="/index2">
+                        <b class="logo-abbr"
+                            ><img
+                                src="img/logo.png"
+                                style="width: 100%"
+                                alt=""
+                            />
+                        </b>
+                        <span class="logo-compact"
+                            ><img src="img/logo.png" style="width: 100%" alt=""
+                        /></span>
+                        <span class="brand-title">
+                            <img
+                                src="img/logo.png"
+                                style="width: 60px; height: 60px"
+                                alt=""
+                            />
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="header">
+                <div class="header-content clearfix">
+                    <div class="nav-control">
+                        <div class="hamburger">
+                            <span class="toggle-icon"
+                                ><i class="icon-menu"></i
+                            ></span>
+                        </div>
+                    </div>
+                    <div class="header-left d-flex align-items-center">
+                        <div class="mx-3">
+                            <h1 class="pt-2" style="font-size: 16px">
+                                Hastane Kara Destek Sistemleri
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="header-right">
+                        <ul class="clearfix">
+                            <li class="icons dropdown">
+                                <div
+                                    class="user-img c-pointer position-relative"
+                                    data-toggle="dropdown"
+                                >
+                                    <span class="activity active"></span>
+                                    <img
+                                        src="img/user.png"
+                                        height="40"
+                                        width="40"
+                                        alt=""
+                                    />
+                                </div>
+                                <div
+                                    class="drop-down dropdown-profile animated fadeIn dropdown-menu"
+                                >
+                                    <div class="dropdown-content-body">
+                                        <ul>
+                                            <li>
+                                                <a href="#"
+                                                    ><i class="icon-user"></i>
+                                                    <span>Profile</span></a
+                                                >
+                                            </li>
+                                            <hr class="my-2" />
+                                            <li>
+                                                <a href="/login"
+                                                    ><i class="icon-key"></i>
+                                                    <span>Çıkış Yap</span></a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="nk-sidebar">
+                <div class="nk-nav-scroll">
+                    <ul class="metismenu" id="menu">
+                        <li class="nav-label">Analizler</li>
+                        <li>
+                            <a href="/index2" aria-expanded="false">
+                                <i class="icon-home menu-icon"></i
+                                ><span class="nav-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/department" aria-expanded="false">
+                                <i class="icon-graph menu-icon"></i
+                                ><span class="nav-text">Departmanlar</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/doctor" aria-expanded="false">
+                                <i class="icon-graph menu-icon"></i
+                                ><span class="nav-text">Doktorlar</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/sick" aria-expanded="false">
+                                <i class="icon-graph menu-icon"></i
+                                ><span class="nav-text">Hastalar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-body">
+                <div class="container-fluid mt-3">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card gradient-1">
+                                <div
+                                    class="card-body d-flex justify-content-around"
+                                >
+                                    <div>
+                                        <span
+                                            class="float-right display-5 opacity-1"
+                                            ><i class="fa fa-h-square fa-lg"></i
+                                        ></span>
+                                    </div>
+                                    <div class="text-center">
+                                        <h3 class="card-title text-white">
+                                            Departman
+                                        </h3>
+                                        <div class="d-inline-block">
+                                            <h2 class="text-white">3</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card gradient-1">
+                                <div
+                                    class="card-body d-flex justify-content-around"
+                                >
+                                    <div>
+                                        <span
+                                            class="float-right display-5 opacity-1"
+                                            ><i class="fa fa-user-md fa-lg"></i
+                                        ></span>
+                                    </div>
+                                    <div class="text-center">
+                                        <h3 class="card-title text-white">
+                                            Doktor
+                                        </h3>
+                                        <div class="d-inline-block">
+                                            <h2 class="text-white">8</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card gradient-1">
+                                <div
+                                    class="card-body d-flex justify-content-around"
+                                >
+                                    <div>
+                                        <span
+                                            class="float-right display-5 opacity-1"
+                                            ><i class="fa fa-users fa-lg"></i
+                                        ></span>
+                                    </div>
+                                    <div class="text-center">
+                                        <h3 class="card-title text-white">
+                                            Hasta
+                                        </h3>
+                                        <div class="d-inline-block">
+                                            <h2 class="text-white">45</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer gradient-1">
+                <div
+                    class="d-flex justify-content-center align-items-center pt-3 pb-2"
+                >
+                    <h3 class="mx-2 text-white" style="font-size: 20px">
+                        Hastane KDS
+                    </h3>
+                    <h3 class="mx-2 text-white" style="font-size: 20px">|</h3>
+                    <h3 class="mx-2 text-white" style="font-size: 20px">
+                        2024
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <script src="theme/plugins/common/common.min.js"></script>
+        <script src="theme/js/custom.min.js"></script>
+        <script src="theme/js/settings.js"></script>
+        <script src="theme/js/gleek.js"></script>
+        <script src="theme/js/styleSwitcher.js"></script>
+        <script src="theme/plugins/chart.js/Chart.bundle.min.js"></script>
+        <script src="theme/plugins/circle-progress/circle-progress.min.js"></script>
+        <script src="theme/plugins/d3v3/index.js"></script>
+        <script src="theme/plugins/topojson/topojson.min.js"></script>
+        <script src="theme/plugins/datamaps/datamaps.world.min.js"></script>
+        <script src="theme/plugins/raphael/raphael.min.js"></script>
+        <script src="theme/plugins/morris/morris.min.js"></script>
+        <script src="theme/plugins/moment/moment.min.js"></script>
+        <script src="theme/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+        <script src="theme/plugins/chartist/js/chartist.min.js"></script>
+        <script src="theme/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+        <script src="theme/js/dashboard/dashboard-1.js"></script>
+    </body>
+</html>

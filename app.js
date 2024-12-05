@@ -33,6 +33,12 @@ app.get("/", async (req, res) => {
     });
 });
 
+app.get("/index2", async (req, res) => {
+    res.render("index2", {
+        title: "Ana Sayfa2 | Hastane KDS",
+    });
+});
+
 app.get("/login", async (req, res) => {
     res.render("login", {
         title: "Admin Giriş | Hastane KDS",
