@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 const Department = require("./models/Department");
 const Doctor = require("./models/Doctor");
 const Sick = require("./models/Sick");
+const Admin = require("./models/Admin");
 
 app.get("/", async (req, res) => {
     const count_department = await Department.countAmount();
@@ -38,6 +39,12 @@ app.get("/login", async (req, res) => {
     res.render("login", {
         title: "Admin Giriş | Hastane KDS",
     });
+});
+
+app.post("/api/login", async (req, res) => {
+    const admin = await Admin.get(req.body);
+    if (admin[0][0]) res.redirect("/");
+    else res.redirect("/login");
 });
 
 app.get("/department/", async (req, res) => {
