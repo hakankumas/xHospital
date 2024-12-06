@@ -1,6 +1,16 @@
 const connection = require("../database/db");
 
 module.exports = class Department {
+    // Departmanlar
+    static getAll() {
+        return connection.execute(
+            `SELECT
+                department.id as department_id,
+                department.name as department_name
+            FROM department`
+        );
+    }
+
     // Departman Bilgisi + Departmanlardaki doktor sayısı
     static numberOfDoctorInDepartment() {
         return connection.execute(

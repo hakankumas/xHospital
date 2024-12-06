@@ -1,6 +1,20 @@
 const connection = require("../database/db");
 
 module.exports = class Doctor {
+    // Doktorlar
+    static getAll() {
+        return connection.execute(
+            `SELECT 
+                doctor.id as doctor_id,
+                doctor.name as doctor_name,
+                doctor.surname as doctor_surname,
+                department.id as department_id,
+                department.name as department_name
+            FROM doctor
+            INNER JOIN department ON doctor.department_id = department.id`
+        );
+    }
+
     // Doktor Bilgileri + Toplam hasta sayıları
     static sumNumberOfSickByDoctor() {
         return connection.execute(
