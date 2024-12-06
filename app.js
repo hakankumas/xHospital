@@ -163,6 +163,12 @@ app.get("/api/numberOfDoctorInDepartment", async (req, res) => {
     });
 });
 
+app.post("/department/create", async (req, res) => {
+    const { department_name } = req.body;
+    const department = await Department.create(department_name);
+    if (department) res.redirect("/");
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`);

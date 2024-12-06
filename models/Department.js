@@ -11,6 +11,14 @@ module.exports = class Department {
         );
     }
 
+    // Yeni Departman Ekle
+    static create(department_name) {
+        return connection.execute(
+            `INSERT INTO department (department.name) VALUES (?)`,
+            [department_name]
+        );
+    }
+
     // Departman Bilgisi + Departmanlardaki doktor sayısı
     static numberOfDoctorInDepartment() {
         return connection.execute(
