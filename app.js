@@ -154,6 +154,15 @@ app.get("/api/numberOfExaminationPerDoctor", async (req, res) => {
     });
 });
 
+app.get("/api/numberOfDoctorInDepartment", async (req, res) => {
+    const list_numberOfDoctorInDepartment =
+        await Department.numberOfDoctorInDepartment();
+
+    res.status(200).json({
+        numberOfDoctorInDepartment: list_numberOfDoctorInDepartment[0],
+    });
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`);
