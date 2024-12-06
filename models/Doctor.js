@@ -22,12 +22,14 @@ module.exports = class Doctor {
                 doctor.id as doctor_id,
                 doctor.name as doctor_name,
                 doctor.surname as doctor_surname,
+                gender.name as gender_name,
                 department.id as department_id,
                 department.name as department_name,
                 COUNT(sick.id) AS number
             FROM doctor
             LEFT JOIN sick ON sick.doctor_id = doctor.id
             LEFT JOIN department ON doctor.department_id = department.id
+            LEFT JOIN gender ON doctor.gender_id = gender.id
             GROUP BY doctor.id
             ORDER BY number DESC`
         );

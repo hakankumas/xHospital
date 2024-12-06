@@ -217,6 +217,7 @@
                                                     </th>
                                                     <th>Doktor Adı</th>
                                                     <th>Doktor Soyadı</th>
+                                                    <th>Cinsiyet</th>
                                                     <th>Departman Adı</th>
                                                     <th class="text-center">
                                                         Muayene Sayısı
@@ -233,6 +234,7 @@
                                                     </td>
                                                     <td><%= item.doctor_name %></td>
                                                     <td><%= item.doctor_surname %></td>
+                                                    <td><%= item.gender_name %></td>
                                                     <td><%= item.department_name %></td>
                                                     <td class="text-center">
                                                         <%= item.number %>
@@ -281,7 +283,7 @@
                 paging: false,
                 scrollCollapse: true,
                 scrollY: "75vh",
-                order: [[4, "desc"]],
+                order: [[5, "desc"]],
             });
         </script>
     </body>
