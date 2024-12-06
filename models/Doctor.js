@@ -57,4 +57,28 @@ module.exports = class Doctor {
             ORDER BY sick_registration_date DESC, number DESC`
         );
     }
+
+    // Doktor Başına Düşen Muayene Sayısı
+    static numberOfExaminationPerDoctor() {
+        return connection.execute(
+            `SELECT
+                department.id AS department_id,
+                department.name AS department_name,
+                COUNT(DISTINCT doctor.id) AS doctor_number,
+                COUNT(sick.id) AS sick_number,
+                CASE 
+                    WHEN COUNT(DISTINCT doctor.id) > 0 THEN 
+                        ROUND(COUNT(sick.id) * 1.0 / COUNT(DISTINCT doctor.id), 1)
+                    ELSE 0
+                END AS number_rate
+            FROM
+                department
+            INNER JOIN doctor ON doctor.department_id = department.id
+            INNER JOIN sick ON sick.doctor_id = doctor.id
+            GROUP BY
+                department.id, department.name
+            ORDER BY
+                number_rate DESC`
+        );
+    }
 };
