@@ -363,7 +363,10 @@
                         <div class="col-lg-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <form action="#" method="post">
+                                    <form
+                                        action="<%= baseURL %>/doctor/create"
+                                        method="post"
+                                    >
                                         <h1 style="font-size: 20px">
                                             Doktor Ekle
                                         </h1>
@@ -375,24 +378,50 @@
                                                 class="form-control input-default"
                                                 placeholder="Doktor Adı"
                                                 name="doctor_name"
-                                                style="width: 30%"
+                                                style="width: 25%"
+                                                required
                                             />
                                             <input
                                                 type="text"
                                                 class="form-control input-default"
                                                 placeholder="Doktor Soyadı"
                                                 name="doctor_surname"
-                                                style="width: 30%"
+                                                style="width: 25%"
+                                                required
                                             />
-                                            <input
-                                                type="text"
-                                                class="form-control input-default"
-                                                placeholder="Departman Adı"
-                                                name="department_name"
-                                                style="width: 30%"
-                                            />
+                                            <select
+                                                class="form-control"
+                                                name="gender_id"
+                                                style="width: 25%"
+                                                required
+                                            >
+                                                <option value="">
+                                                    Cinsiyet
+                                                </option>
+                                                <option value="1">Erkek</option>
+                                                <option value="2">Kadın</option>
+                                            </select>
+                                            <select
+                                                class="form-control"
+                                                name="department_id"
+                                                style="width: 25%"
+                                                required
+                                            >
+                                                <option value="">
+                                                    Departman Adı
+                                                </option>
+                                                <!-- prettier-ignore -->
+                                                <% list_department.forEach(item => { %>
+                                                <!-- prettier-ignore -->
+                                                <option value="<%= item.department_id %>">
+                                                <!-- prettier-ignore -->
+                                                    <%= item.department_name %>
+                                                <!-- prettier-ignore -->
+                                                </option>
+                                                <% }) %>
+                                            </select>
                                             <button
-                                                type="button"
+                                                type="submit"
                                                 class="btn btn-outline-primary"
                                             >
                                                 Ekle

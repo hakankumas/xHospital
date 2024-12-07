@@ -15,6 +15,16 @@ module.exports = class Doctor {
         );
     }
 
+    // Doktor Ekle
+    static create(condition) {
+        const { doctor_name, doctor_surname, gender_id, department_id } =
+            condition;
+        return connection.execute(
+            `INSERT INTO doctor (doctor.name, doctor.surname, doctor.gender_id, doctor.department_id) VALUES (?, ?, ?, ?)`,
+            [doctor_name, doctor_surname, gender_id, department_id]
+        );
+    }
+
     // Doktor Bilgileri + Toplam hasta sayıları
     static sumNumberOfSickByDoctor() {
         return connection.execute(

@@ -164,9 +164,13 @@ app.get("/api/numberOfDoctorInDepartment", async (req, res) => {
 });
 
 app.post("/department/create", async (req, res) => {
-    const { department_name } = req.body;
-    const department = await Department.create(department_name);
+    const department = await Department.create(req.body);
     if (department) res.redirect("/");
+});
+
+app.post("/doctor/create", async (req, res) => {
+    const doctor = await Doctor.create(req.body);
+    if (doctor) res.redirect("/");
 });
 
 const PORT = 3000;
