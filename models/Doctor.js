@@ -8,10 +8,12 @@ module.exports = class Doctor {
                 doctor.id as doctor_id,
                 doctor.name as doctor_name,
                 doctor.surname as doctor_surname,
+                gender.name as gender_name,
                 department.id as department_id,
                 department.name as department_name
             FROM doctor
-            INNER JOIN department ON doctor.department_id = department.id`
+            INNER JOIN department ON doctor.department_id = department.id
+            INNER JOIN gender ON doctor.gender_id = gender.id`
         );
     }
 
@@ -23,6 +25,13 @@ module.exports = class Doctor {
             `INSERT INTO doctor (doctor.name, doctor.surname, doctor.gender_id, doctor.department_id) VALUES (?, ?, ?, ?)`,
             [doctor_name, doctor_surname, gender_id, department_id]
         );
+    }
+
+    // Doktor Sil
+    static delete(doctor_id) {
+        return connection.execute(`DELETE FROM doctor WHERE id = ?`, [
+            doctor_id,
+        ]);
     }
 
     // Doktor Bilgileri + Toplam hasta sayıları

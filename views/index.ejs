@@ -336,8 +336,7 @@
                                             <tr>
                                                 <th class="text-center">ID</th>
                                                 <th>Departman Adı</th>
-                                                <th>Güncelle</th>
-                                                <th>Sil</th>
+                                                <th class="text-center">Sil</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -351,8 +350,9 @@
                                                 <td>
                                                     <%= item.department_name %>
                                                 </td>
-                                                <td class="text-success">Güncelle</td>
-                                                <td class="text-danger">Sil</td>
+                                                <td class="text-danger text-center">
+                                                    <a href="<%= baseURL %>/department/delete/<%= item.department_id %>" class="btn btn-outline-danger">Sil</a>
+                                                </td>
                                             </tr>
                                             <% }) %>
                                         </tbody>
@@ -452,9 +452,9 @@
                                                 <th>ID</th>
                                                 <th>Doktor Adı</th>
                                                 <th>Doktor Soyadı</th>
+                                                <th>Cinsiyet</th>
                                                 <th>Departman Adı</th>
-                                                <th>Güncelle</th>
-                                                <th>Sil</th>
+                                                <th class="text-center">Sil</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -472,10 +472,14 @@
                                                     <%= item.doctor_surname %>
                                                 </td>
                                                 <td>
+                                                    <%= item.gender_name %>
+                                                </td>
+                                                <td>
                                                     <%= item.department_name %>
                                                 </td>
-                                                <td class="text-success">Güncelle</td>
-                                                <td class="text-danger">Sil</td>
+                                                <td class="text-danger text-center">
+                                                    <a href="<%= baseURL %>/doctor/delete/<%= item.doctor_id %>" class="btn btn-outline-danger">Sil</a>
+                                                </td>
                                             </tr>
                                             <% }) %>
                                         </tbody>
@@ -521,14 +525,14 @@
             new DataTable("#table_department", {
                 paging: false,
                 scrollCollapse: true,
-                scrollY: "30vh",
+                scrollY: "40vh",
                 // order: [[2, "desc"]],
             });
 
             new DataTable("#table_doctor", {
                 paging: false,
                 scrollCollapse: true,
-                scrollY: "30vh",
+                scrollY: "40vh",
                 // order: [[2, "desc"]],
             });
         </script>

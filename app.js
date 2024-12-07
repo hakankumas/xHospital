@@ -164,12 +164,22 @@ app.get("/api/numberOfDoctorInDepartment", async (req, res) => {
 });
 
 app.post("/department/create", async (req, res) => {
-    const department = await Department.create(req.body);
+    const department = await Department.create(req.body.department_name);
     if (department) res.redirect("/");
 });
 
 app.post("/doctor/create", async (req, res) => {
     const doctor = await Doctor.create(req.body);
+    if (doctor) res.redirect("/");
+});
+
+app.get("/department/delete/:id", async (req, res) => {
+    const department = await Department.delete(req.params.id);
+    if (department) res.redirect("/");
+});
+
+app.get("/doctor/delete/:id", async (req, res) => {
+    const doctor = await Doctor.delete(req.params.id);
     if (doctor) res.redirect("/");
 });
 

@@ -13,10 +13,9 @@ module.exports = class Department {
 
     // Departman Ekle
     static create(department_name) {
-        return connection.execute(
-            `INSERT INTO department (department.name) VALUES (?)`,
-            [department_name]
-        );
+        return connection.execute(`INSERT INTO department (name) VALUES (?)`, [
+            department_name,
+        ]);
     }
 
     // Departman Sil
