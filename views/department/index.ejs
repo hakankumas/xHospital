@@ -65,7 +65,6 @@
                             ] = number;
                         });
 
-                        // Tüm departmanları bul ve sütun başlıklarını oluştur
                         const departments = [
                             ...new Set(
                                 data.dailyNumberOfSickByDepartment.map(
@@ -75,22 +74,19 @@
                         ];
                         const chartDataArray = [["Tarih", ...departments]];
 
-                        // Veriyi tabloya dönüştür
                         Object.values(formattedData).forEach((row) => {
                             const rowArray = [row.date];
                             departments.forEach((department) => {
-                                rowArray.push(row[department] || 0); // Eksik veriler için 0 ekle
+                                rowArray.push(row[department] || 0);
                             });
                             chartDataArray.push(rowArray);
                         });
 
-                        // Veriyi Google Charts için formatla
                         const chartData =
                             google.visualization.arrayToDataTable(
                                 chartDataArray
                             );
 
-                        // Grafik seçeneklerini tanımla
                         const options = {
                             title: "Departmanların Günlük Muayene Sayıları (Son 14 Gün)",
                             titleTextStyle: {
@@ -107,14 +103,13 @@
                             seriesType: "bars",
                             series: { [departments.length]: { type: "line" } },
                             chartArea: {
-                                top: 75, // Üst padding
-                                right: 300, // Sağ padding
-                                bottom: 175, // Alt padding
-                                left: 150, // Sol padding
+                                top: 75,
+                                right: 300,
+                                bottom: 175,
+                                left: 150,
                             },
                         };
 
-                        // Grafiği çiz
                         const chart = new google.visualization.ComboChart(
                             document.getElementById("chart_div")
                         );

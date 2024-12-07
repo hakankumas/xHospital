@@ -40,14 +40,12 @@
                 fetch("http://localhost:3000/api/genderBySickid")
                     .then((response) => response.json())
                     .then((data) => {
-                        const chartData = [["Cinsiyet", "Yüzde"]]; // Başlık ekleniyor
+                        const chartData = [["Cinsiyet", "Yüzde"]];
 
-                        // API'den dönen verileri formatlayarak chartData'ya ekliyoruz
                         data.genderBySickid.forEach((item) => {
                             chartData.push([item.gender_name, item.number]);
                         });
 
-                        // Google Charts veri formatına dönüştürülüyor
                         const dataTable =
                             google.visualization.arrayToDataTable(chartData);
 
@@ -58,7 +56,7 @@
                                 bold: true,
                             },
                             chartArea: {
-                                top: 85, // Üst padding
+                                top: 85,
                             },
                         };
 
@@ -80,14 +78,12 @@
                 fetch("http://localhost:3000/api/genderByTcno")
                     .then((response) => response.json())
                     .then((data) => {
-                        const chartData = [["Cinsiyet", "Yüzde"]]; // Başlık ekleniyor
+                        const chartData = [["Cinsiyet", "Yüzde"]];
 
-                        // API'den dönen verileri formatlayarak chartData'ya ekliyoruz
                         data.genderByTcno.forEach((item) => {
                             chartData.push([item.gender_name, item.number]);
                         });
 
-                        // Google Charts veri formatına dönüştürülüyor
                         const dataTable =
                             google.visualization.arrayToDataTable(chartData);
 
@@ -98,7 +94,7 @@
                                 bold: true,
                             },
                             chartArea: {
-                                top: 85, // Üst padding
+                                top: 85,
                             },
                         };
 
@@ -120,14 +116,12 @@
                 fetch("http://localhost:3000/api/numberOfSickByDepartment")
                     .then((response) => response.json())
                     .then((data) => {
-                        const chartData = [["Departman Adı", "Muayene Sayısı"]]; // Başlık ekleniyor
+                        const chartData = [["Departman Adı", "Muayene Sayısı"]];
 
-                        // API'den dönen verileri formatlayarak chartData'ya ekliyoruz
                         data.numberOfSickByDepartment.forEach((item) => {
                             chartData.push([item.department_name, item.number]);
                         });
 
-                        // Google Charts veri formatına dönüştürülüyor
                         const dataTable =
                             google.visualization.arrayToDataTable(chartData);
 
@@ -138,7 +132,7 @@
                                 bold: true,
                             },
                             chartArea: {
-                                top: 85, // Üst padding
+                                top: 85,
                             },
                         };
 
