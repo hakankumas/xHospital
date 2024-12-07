@@ -1,11 +1,11 @@
 const Sick = require("../models/Sick");
 
 exports.index = async (req, res) => {
-    res.render("./sick/index");
-};
+    const list_sick = await Sick.getAll();
+    res.render("./sick/index", {
+        title: "Hastalar | Hastane KDS",
+        subtitle: "Hastalar | Hastane Karar Destek Sistemleri",
 
-// exports.getAll = async (req, res) => {
-//     const sicks = await Sick.getAll();
-//     if (!sicks) return res.status(404).end();
-//     res.status(200).json(sicks[0]);
-// };
+        list_sick: list_sick[0],
+    });
+};
