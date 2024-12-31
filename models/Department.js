@@ -57,28 +57,26 @@ module.exports = class Department {
         );
     }
 
-    // Departmanların günlük hasta sayısı
-    static dailyNumberOfSickByDepartment() {
-        return connection.execute(
-            `SELECT    
+    // Departmanların aylık hasta sayısı
+    static monthlyNumberOfSickByDepartment() {
+        return connection.execute(`
+            SELECT    
                 department.id as department_id,
                 department.name as department_name,
-                DATE_FORMAT(sick.registration_date, '%Y-%m-%d') AS sick_registration_date,
+                DATE_FORMAT(sick.registration_date, '%Y-%m') AS sick_registration_date,
                 COUNT(sick.id) AS number
             FROM sick 
             LEFT JOIN doctor ON sick.doctor_id = doctor.id
             LEFT JOIN department ON doctor.department_id = department.id
             INNER JOIN (
-                SELECT DATE_FORMAT(sick.registration_date, '%Y-%m-%d') AS sick_registration_date
+				SELECT DATE_FORMAT(sick.registration_date, '%Y-%m') AS sick_registration_date
                 FROM sick
                 GROUP BY sick_registration_date
                 ORDER BY sick_registration_date DESC
-                LIMIT 14
-            ) AS recent_dates ON DATE_FORMAT(sick.registration_date, '%Y-%m-%d') = recent_dates.sick_registration_date
+            ) AS recent_dates ON DATE_FORMAT(sick.registration_date, '%Y-%m') = recent_dates.sick_registration_date
             GROUP BY sick_registration_date, department.id
-            ORDER BY sick_registration_date DESC, number DESC
-            `
-        );
+            ORDER BY sick_registration_date ASC, number DESC
+        `);
     }
 
     // Departmanların toplam hasta sayısı

@@ -5,8 +5,8 @@ const apiController = require("../controllers/api");
 router.post("/login", apiController.login);
 router.get("/dailySickAmount", apiController.dailySickAmount);
 router.get(
-    "/dailyNumberOfSickByDepartment",
-    apiController.dailyNumberOfSickByDepartment
+    "/monthlyNumberOfSickByDepartment",
+    apiController.monthlyNumberOfSickByDepartment
 );
 router.get(
     "/dailyNumberOfSickByDoctor",

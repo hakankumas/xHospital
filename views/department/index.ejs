@@ -35,7 +35,9 @@
             google.charts.setOnLoadCallback(drawVisualization);
 
             function drawVisualization() {
-                fetch("http://localhost:3000/api/dailyNumberOfSickByDepartment")
+                fetch(
+                    "http://localhost:3000/api/monthlyNumberOfSickByDepartment"
+                )
                     .then((response) => {
                         if (!response.ok) {
                             throw new Error("Network response was not ok");
@@ -44,7 +46,7 @@
                     })
                     .then((data) => {
                         const formattedData = {};
-                        data.dailyNumberOfSickByDepartment.forEach((item) => {
+                        data.monthlyNumberOfSickByDepartment.forEach((item) => {
                             const {
                                 department_name,
                                 sick_registration_date,
@@ -54,7 +56,6 @@
                             if (!formattedData[sick_registration_date]) {
                                 formattedData[sick_registration_date] = {
                                     date: new Intl.DateTimeFormat("tr-TR", {
-                                        day: "numeric",
                                         month: "short",
                                         year: "numeric",
                                     }).format(new Date(sick_registration_date)),
@@ -67,7 +68,7 @@
 
                         const departments = [
                             ...new Set(
-                                data.dailyNumberOfSickByDepartment.map(
+                                data.monthlyNumberOfSickByDepartment.map(
                                     (item) => item.department_name
                                 )
                             ),
@@ -88,7 +89,7 @@
                             );
 
                         const options = {
-                            title: "Departmanların Günlük Muayene Sayıları (Son 14 Gün)",
+                            title: "Departmanların Aylık Muayene Sayıları",
                             titleTextStyle: {
                                 fontSize: 24,
                                 bold: true,
@@ -96,9 +97,9 @@
                             vAxis: { title: "Muayene Sayısı" },
                             hAxis: {
                                 title: "Tarih",
-                                format: "M/d/yy",
-                                slantedText: true,
-                                slantedTextAngle: 90,
+                                format: "d/yy",
+                                // slantedText: true,
+                                // slantedTextAngle: 90,
                             },
                             seriesType: "bars",
                             series: { [departments.length]: { type: "line" } },
