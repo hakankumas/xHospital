@@ -9,11 +9,11 @@ exports.login = async (req, res) => {
     else res.redirect("/login");
 };
 
-exports.dailySickAmount = async (req, res) => {
-    const dailySickAmount = await Sick.dailySickAmount();
+exports.monthlySickAmount = async (req, res) => {
+    const monthlySickAmount = await Sick.monthlySickAmount();
 
     res.status(200).json({
-        dailySickAmount: dailySickAmount[0],
+        monthlySickAmount: monthlySickAmount[0],
     });
 };
 

@@ -37,7 +37,7 @@
             google.charts.setOnLoadCallback(drawBasic);
 
             function drawBasic() {
-                fetch("http://localhost:3000/api/dailySickAmount")
+                fetch("http://localhost:3000/api/monthlySickAmount")
                     .then((response) => {
                         if (!response.ok) {
                             throw new Error("Network response was not ok");
@@ -46,12 +46,11 @@
                     })
                     .then((data) => {
                         var chartData = new google.visualization.DataTable();
-                        chartData.addColumn("string", "Günler");
+                        chartData.addColumn("string", "Aylar");
                         chartData.addColumn("number", "Muayene Sayısı");
-                        data.dailySickAmount.forEach((item) => {
+                        data.monthlySickAmount.forEach((item) => {
                             chartData.addRow([
                                 new Intl.DateTimeFormat("tr-TR", {
-                                    day: "numeric",
                                     month: "short",
                                     year: "numeric",
                                 }).format(
@@ -61,7 +60,6 @@
                             ]);
                         });
                         var options = {
-                            // title: "Günlük Muayene Sayıları (Son 14 Gün)",
                             titleTextStyle: {
                                 fontSize: 24,
                                 bold: true,
@@ -69,13 +67,14 @@
                             // curveType: "function",
                             // legend: { position: "bottom" },
                             hAxis: {
-                                title: "Günler",
-                                format: "M/d/yy",
-                                slantedText: true,
-                                slantedTextAngle: 90,
+                                title: "Aylar",
+                                // format: "M/d/yy",
+                                // slantedText: true,
+                                // slantedTextAngle: 90,
                             },
                             vAxis: {
                                 title: "Muayene Sayısı",
+                                format: "#",
                             },
                             chartArea: {
                                 top: 75,
@@ -86,7 +85,7 @@
                         };
 
                         var chart = new google.visualization.LineChart(
-                            document.getElementById("chart_dailySickAmount")
+                            document.getElementById("chart_monthlySickAmount")
                         );
                         chart.draw(chartData, options);
                     })
@@ -256,10 +255,10 @@
                                         class="text-center font-weight-bold"
                                         style="font-size: 25px"
                                     >
-                                        Günlük Muayene Sayıları (Son 14 Gün)
+                                        Aylık Muayene Sayıları
                                     </h1>
                                     <div
-                                        id="chart_dailySickAmount"
+                                        id="chart_monthlySickAmount"
                                         style="min-width: 100%; height: 60vh"
                                     ></div>
                                 </div>

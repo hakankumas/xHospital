@@ -3,7 +3,7 @@ const router = express.Router();
 const apiController = require("../controllers/api");
 
 router.post("/login", apiController.login);
-router.get("/dailySickAmount", apiController.dailySickAmount);
+router.get("/monthlySickAmount", apiController.monthlySickAmount);
 router.get(
     "/monthlyNumberOfSickByDepartment",
     apiController.monthlyNumberOfSickByDepartment
