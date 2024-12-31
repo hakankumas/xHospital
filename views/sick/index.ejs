@@ -182,6 +182,9 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">
+                                                        ID
+                                                    </th>
+                                                    <th class="text-center">
                                                         TC No
                                                     </th>
                                                     <th>Hasta</th>
@@ -197,6 +200,7 @@
                                                 <% list_sick.forEach(item => { %>
                                                 <!-- prettier-ignore -->
                                                 <tr>
+                                                    <td class="text-center"><%= item.sick_id %></td>
                                                     <td class="text-center"><%= item.sick_tc_no %></td>
                                                     <td><%= `${item.sick_name} ${item.sick_surname}` %></td>
                                                     <td><%= `${item.doctor_name} ${item.doctor_surname}` %></td>
@@ -297,7 +301,7 @@
                 paging: false,
                 scrollCollapse: true,
                 scrollY: "100vh",
-                order: [[4, "desc"]],
+                order: [[0, "desc"]],
             });
         </script>
     </body>

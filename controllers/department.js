@@ -1,16 +1,13 @@
 const Department = require("../models/Department");
 
 exports.index = async (req, res) => {
-    const list_numberOfDoctorInDepartment =
-        await Department.numberOfDoctorInDepartment();
-    const list_numberOfSickByDepartment =
-        await Department.numberOfSickByDepartment();
+    const number_of_sick_per_doctor =
+        await Department.number_of_sick_per_doctor();
     res.render("./department/index", {
         title: "Departmanlar | Hastane KDS",
         subtitle: "Departmanlar | Hastane Karar Destek Sistemleri",
 
-        list_numberOfDoctorInDepartment: list_numberOfDoctorInDepartment[0],
-        list_numberOfSickByDepartment: list_numberOfSickByDepartment[0],
+        number_of_sick_per_doctor: number_of_sick_per_doctor[0],
     });
 };
 

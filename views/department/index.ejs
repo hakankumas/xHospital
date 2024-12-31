@@ -146,66 +146,15 @@
                         </div>
                     </div>
                     <div class="row d-flex">
-                        <div class="col-12 col-lg-6">
+                        <div class="col-12 col-lg-12">
                             <div class="card">
                                 <div class="card-body">
                                     <h1
                                         class="text-center"
                                         style="font-size: 24px"
                                     >
-                                        Departmanlardaki Doktor Sayıları
+                                        Departman Verileri
                                     </h1>
-                                    <div>
-                                        <table
-                                            id="table_departmentDoctor"
-                                            class="display rounded"
-                                            style="
-                                                width: 100%;
-                                                background-color: whitesmoke;
-                                            "
-                                        >
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">
-                                                        ID
-                                                    </th>
-                                                    <th>Departman Adı</th>
-                                                    <th class="text-center">
-                                                        Doktor Sayısı
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- prettier-ignore -->
-                                                <% list_numberOfDoctorInDepartment.forEach(item => { %>
-                                                <!-- prettier-ignore -->
-                                                <tr>
-                                                    <td class="text-center">
-                                                        <%= item.department_id %>
-                                                    </td>
-                                                    <td>
-                                                        <%= item.department_name %>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <%= item.number %>
-                                                    </td>
-                                                </tr>
-                                                <% }) %>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5
-                                        class="text-center"
-                                        style="font-size: 24px"
-                                    >
-                                        Departmanların Toplam Muayene Sayıları
-                                    </h5>
                                     <div>
                                         <table
                                             id="table_department"
@@ -218,25 +167,40 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">
-                                                        ID
+                                                        Departman ID
                                                     </th>
                                                     <th>Departman Adı</th>
                                                     <th class="text-center">
-                                                        Muayene Sayısı
+                                                        Doktor Sayısı
+                                                    </th>
+                                                    <th class="text-center">
+                                                        Hasta Sayısı
+                                                    </th>
+                                                    <th class="text-center">
+                                                        Doktor Başına Düşen
+                                                        Hasta Sayısı
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <!-- prettier-ignore -->
-                                                <% list_numberOfSickByDepartment.forEach(item => { %>
+                                                <% number_of_sick_per_doctor.forEach(item => { %>
                                                 <!-- prettier-ignore -->
                                                 <tr>
                                                     <td class="text-center">
                                                         <%= item.department_id %>
                                                     </td>
-                                                    <td><%= item.department_name %></td>
+                                                    <td>
+                                                        <%= item.department_name %>
+                                                    </td>
                                                     <td class="text-center">
-                                                        <%= item.number %>
+                                                        <%= item.number_doctor %>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <%= item.number_sick %>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <%= item.numbersick_perdoctor %>
                                                     </td>
                                                 </tr>
                                                 <% }) %>
@@ -268,18 +232,11 @@
         <script src="theme/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
         <script src="theme/js/dashboard/dashboard-1.js"></script>
         <script>
-            new DataTable("#table_departmentDoctor", {
-                paging: false,
-                scrollCollapse: true,
-                scrollY: "30vh",
-                order: [[2, "desc"]],
-            });
-
             new DataTable("#table_department", {
                 paging: false,
                 scrollCollapse: true,
-                scrollY: "30vh",
-                order: [[2, "desc"]],
+                scrollY: "50vh",
+                order: [[4, "desc"]],
             });
         </script>
     </body>

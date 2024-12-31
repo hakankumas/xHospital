@@ -93,4 +93,29 @@ module.exports = class Department {
             ORDER BY number DESC`
         );
     }
+
+    // Departmandaki Doktor Sayısı + Muayene Edilen Hasta Sayısı ve Yoğunluk
+    static number_of_sick_per_doctor() {
+        return connection.execute(`
+            SELECT
+                department_id,
+                department_name,
+                number_doctor,
+                number_sick,
+                ROUND(number_sick / number_doctor, 1) AS numbersick_perdoctor
+            FROM (
+                SELECT
+                    department.id AS department_id,
+                    department.name AS department_name,
+                    COUNT(DISTINCT doctor.id) AS number_doctor,
+                    COUNT(DISTINCT sick.id) AS number_sick
+                FROM department
+                LEFT JOIN doctor ON doctor.department_id = department.id
+                LEFT JOIN sick ON doctor.id = sick.doctor_id
+                GROUP BY department.id
+            ) AS subquery
+            WHERE number_doctor > 0
+            ORDER BY numbersick_perdoctor DESC
+        `);
+    }
 };
