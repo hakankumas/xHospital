@@ -9,8 +9,8 @@ router.get(
     apiController.monthlyNumberOfSickByDepartment
 );
 router.get(
-    "/dailyNumberOfSickByDoctor",
-    apiController.dailyNumberOfSickByDoctor
+    "/monthlyNumberOfSickByDoctor",
+    apiController.monthlyNumberOfSickByDoctor
 );
 router.get("/genderBySickid", apiController.genderBySickid);
 router.get("/genderByTcno", apiController.genderByTcno);

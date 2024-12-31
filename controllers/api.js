@@ -26,11 +26,12 @@ exports.monthlyNumberOfSickByDepartment = async (req, res) => {
     });
 };
 
-exports.dailyNumberOfSickByDoctor = async (req, res) => {
-    const dailyNumberOfSickByDoctor = await Doctor.dailyNumberOfSickByDoctor();
+exports.monthlyNumberOfSickByDoctor = async (req, res) => {
+    const monthlyNumberOfSickByDoctor =
+        await Doctor.monthlyNumberOfSickByDoctor();
 
     res.status(200).json({
-        dailyNumberOfSickByDoctor: dailyNumberOfSickByDoctor[0],
+        monthlyNumberOfSickByDoctor: monthlyNumberOfSickByDoctor[0],
     });
 };
 
