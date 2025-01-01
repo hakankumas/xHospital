@@ -246,6 +246,72 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-lg-12" style="font-size: 15px">
+                            <!-- prettier-ignore -->
+                            <% 
+                                let alertItems = number_of_sick_per_doctor
+                                    .filter(item => item.department_metric != null && item.numbersick_perdoctor > item.department_metric)
+                                    .map(item => ({
+                                        department: item.department_name,
+                                        currentLoad: item.numbersick_perdoctor,
+                                        limit: item.department_metric
+                                    }));
+                            %>
+
+                            <% if (alertItems.length > 0) { %>
+                            <div
+                                class="alert alert-danger alert-dismissible fade show"
+                                role="alert"
+                            >
+                                <h1 style="font-size: 22px">
+                                    Yoğunluk Limitini Aşan Departmanlar
+                                </h1>
+                                <ul
+                                    style="
+                                        list-style-type: disc;
+                                        margin-left: 20px;
+                                    "
+                                >
+                                    <% alertItems.forEach(alert => { %>
+                                    <li>
+                                        <strong
+                                            ><%= alert.department %>:</strong
+                                        >
+                                        <ul style="margin-left: 30px">
+                                            <li>
+                                                Belirlenen Yoğunluk Limiti:
+                                                <strong
+                                                    ><%= alert.limit %></strong
+                                                >
+                                            </li>
+                                            <li>
+                                                Departmanın Mevcut Yoğunluğu:
+                                                <strong
+                                                    ><%= alert.currentLoad
+                                                    %></strong
+                                                >
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <% }) %>
+                                </ul>
+                                <i
+                                    >Yukarıdaki departmanlar için yeni doktor
+                                    istihdamı düşünülebilir.</i
+                                >
+                                <button
+                                    type="button"
+                                    class="close"
+                                    data-dismiss="alert"
+                                    aria-label="Close"
+                                >
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
