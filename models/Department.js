@@ -3,12 +3,14 @@ const connection = require("../database/db");
 module.exports = class Department {
     // Departmanlar
     static getAll() {
-        return connection.execute(
-            `SELECT
+        return connection.execute(`
+            SELECT
                 department.id as department_id,
-                department.name as department_name
-            FROM department`
-        );
+                department.name as department_name,
+                department.metric as department_metric
+            FROM department
+            ORDER BY department.name ASC
+        `);
     }
 
     // Departman Ekle
@@ -102,13 +104,15 @@ module.exports = class Department {
                 department_name,
                 number_doctor,
                 number_sick,
-                ROUND(number_sick / number_doctor, 1) AS numbersick_perdoctor
+                ROUND(number_sick / number_doctor, 1) AS numbersick_perdoctor,
+                department_metric
             FROM (
                 SELECT
                     department.id AS department_id,
                     department.name AS department_name,
                     COUNT(DISTINCT doctor.id) AS number_doctor,
-                    COUNT(DISTINCT sick.id) AS number_sick
+                    COUNT(DISTINCT sick.id) AS number_sick,
+                    department.metric AS department_metric
                 FROM department
                 LEFT JOIN doctor ON doctor.department_id = department.id
                 LEFT JOIN sick ON doctor.id = sick.doctor_id
@@ -117,5 +121,14 @@ module.exports = class Department {
             WHERE number_doctor > 0
             ORDER BY numbersick_perdoctor DESC
         `);
+    }
+
+    // Departman Yoğunluk Metriğini Güncelle
+    static metric(condition) {
+        const { department_id, metric } = condition;
+        return connection.execute(
+            `UPDATE department SET metric = ? WHERE id = ?`,
+            [metric, department_id]
+        );
     }
 };

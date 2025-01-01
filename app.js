@@ -20,6 +20,7 @@ app.use("/sick", sickRoutes);
 app.use("/api", apiRoutes);
 
 const PORT = 3000;
+app.locals.baseURL = `http://localhost:${PORT}`;
 app.listen(PORT, () => {
     console.log(`Server is running at ${PORT}`);
 });

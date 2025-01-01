@@ -94,7 +94,7 @@
                                 fontSize: 24,
                                 bold: true,
                             },
-                            vAxis: { title: "Muayene Sayısı" },
+                            vAxis: { title: "Muayene Sayısı", format: "#" },
                             hAxis: {
                                 title: "Tarih",
                                 // slantedText: true,
@@ -149,6 +149,60 @@
                         <div class="col-12 col-lg-12">
                             <div class="card">
                                 <div class="card-body">
+                                    <h1 style="font-size: 20px">
+                                        Departman İçin Bir Yoğunluk Limiti Seç
+                                        <span>
+                                            <small class="font-italic">
+                                                Her Bir Departman İçin Farklı
+                                                Yoğunluk Limiti
+                                                Belirleyebilirsiniz!</small
+                                            >
+                                        </span>
+                                    </h1>
+
+                                    <form
+                                        action="<%= baseURL %>/department/metric-update"
+                                        method="post"
+                                        class="d-flex justify-content-start align-items-center"
+                                    >
+                                        <select
+                                            class="form-control"
+                                            name="department_id"
+                                            style="width: 20%"
+                                            required
+                                        >
+                                            <option value="">
+                                                Departman Adı
+                                            </option>
+                                            <!-- prettier-ignore -->
+                                            <% list_department.forEach(item => { %>
+                                            <!-- prettier-ignore -->
+                                            <option value="<%= item.department_id %>">
+                                                <!-- prettier-ignore -->
+                                                    <%= item.department_metric != null ? item.department_name + " - Yoğunluk Limiti: " + item.department_metric : item.department_name %>
+                                                <!-- prettier-ignore -->
+                                                </option>
+                                            <% }) %>
+                                        </select>
+                                        <input
+                                            type="text"
+                                            class="form-control input-default mx-2"
+                                            placeholder="Yoğunluk Limiti"
+                                            name="metric"
+                                            style="width: 15%"
+                                        />
+                                        <button
+                                            type="submit"
+                                            class="btn btn-outline-success py-2 px-4"
+                                        >
+                                            Güncelle
+                                        </button>
+                                    </form>
+                                </div>
+                                <div
+                                    class="card-body"
+                                    style="translate: 0px -25px"
+                                >
                                     <h1
                                         class="text-center"
                                         style="font-size: 24px"
@@ -180,6 +234,13 @@
                                                         Doktor Başına Düşen
                                                         Hasta Sayısı
                                                     </th>
+                                                    <th class="text-center">
+                                                        Yöneticinin Belirlediği
+                                                        Yoğunluk Limiti
+                                                    </th>
+                                                    <th class="text-center">
+                                                        Sistem Bildirimi
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -201,6 +262,12 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <%= item.numbersick_perdoctor %>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <%= item.department_metric %>
+                                                    </td>
+                                                    <td class="text-center <%= ( item.department_metric > item.numbersick_perdoctor ) ? 'text-success' : (item.department_metric == null ? 'text-dark' : 'text-danger' ) %>">
+                                                                           <%= ( item.department_metric > item.numbersick_perdoctor ) ? 'İdeal Yoğunluk' : (item.department_metric == null ? 'Limit Belirlenmemiş' : 'Aşırı Yoğunluk'  ) %>
                                                     </td>
                                                 </tr>
                                                 <% }) %>
